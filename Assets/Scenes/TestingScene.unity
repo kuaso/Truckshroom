@@ -1663,7 +1663,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMovementEnabled: 1
-  maxVelocityX: 5
-  maxVelocityY: 5
-  accelerationSpeedPerTick: 0.5
-  decelerationSpeedPerTick: 2.5
+  velocityMultiplierX: 5
+  velocityMultiplierJump: 3

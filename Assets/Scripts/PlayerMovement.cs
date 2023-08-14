@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
 {
     private CustomInput _input;
     private Rigidbody2D _rb;
-    private Vector2 _movement;
+    private Vector2 _xMovement;
+    private Vector2 _yMovement = Vector2.zero;
 
     public bool isMovementEnabled = true;
     [SerializeField] private float velocityMultiplierX = 5f;
+    [SerializeField] private float velocityMultiplierJump = 3f;
 
     private void Awake()
     {
@@ -23,36 +25,32 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         _input.Enable();
-        _input.Player.Movement.performed += OnMovement;
-        _input.Player.Movement.canceled += OnCancelled;
+        _input.Player1.XMovement.performed += OnXMovement;
+        _input.Player1.XMovement.canceled += OnXCancelled;
+        _input.Player1.Fly.performed += OnJump;
+        _input.Player1.Fly.canceled += OnJumpCancelled;
     }
 
     private void OnDisable()
     {
         _input.Disable();
-        _input.Player.Movement.performed -= OnMovement;
-        _input.Player.Movement.canceled -= OnCancelled;
+        _input.Player1.XMovement.performed -= OnXMovement;
+        _input.Player1.XMovement.canceled -= OnXCancelled;
+        _input.Player1.Fly.performed -= OnJump;
+        _input.Player1.Fly.canceled -= OnJumpCancelled;
     }
 
-    private void FixedUpdate()
-    {
-        if (isMovementEnabled)
-        {
-            _rb.velocity = _movement * velocityMultiplierX;
-        }
-        else
-        {
-            _rb.velocity = Vector2.zero;
-        }
-    }
+    private void FixedUpdate() =>
+        _rb.velocity = isMovementEnabled
+            ? new Vector2(_xMovement.x * velocityMultiplierX, _yMovement.y * velocityMultiplierJump)
+            : Vector2.zero;
 
-    private void OnMovement(InputAction.CallbackContext callbackContext)
-    {
-        _movement = callbackContext.ReadValue<Vector2>();
-    }
+    private void OnXMovement(InputAction.CallbackContext callbackContext) =>
+        _xMovement = callbackContext.ReadValue<Vector2>();
 
-    private void OnCancelled(InputAction.CallbackContext callbackContext)
-    {
-        _movement = Vector2.zero;
-    }
+    private void OnXCancelled(InputAction.CallbackContext callbackContext) => _xMovement = Vector2.zero;
+
+    private void OnJump(InputAction.CallbackContext callbackContext) => _yMovement.y = velocityMultiplierJump;
+
+    private void OnJumpCancelled(InputAction.CallbackContext callbackContext) => _yMovement = Vector2.zero;
 }
