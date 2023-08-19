@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputScript : MonoBehaviour
 {
-    private PlayerInput _playerInput;
+    private InputActionMap _inputActionMap;
     private Rigidbody2D _rb;
     private float _horizontalMovement;
     private float _verticalMovement;
@@ -16,31 +16,32 @@ public class PlayerInputScript : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
 
     private void Awake()
-    {
-        _playerInput = new PlayerInput();
+    {   
+        var inputActionAsset = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
+        _inputActionMap = inputActionAsset.FindActionMap("Player");
         _rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
     {
-        _playerInput.Enable();
-        _playerInput.Player.HorizontalMovement.performed += Move;
-        _playerInput.Player.HorizontalMovement.canceled += StoppedMoving;
-        _playerInput.Player.Crouch.performed += Crouch;
-        _playerInput.Player.Crouch.canceled += StoppedCrouching;
-        _playerInput.Player.Fly.performed += Fly;
-        _playerInput.Player.Fly.canceled += StoppedFlying;
+        _inputActionMap.Enable();
+        _inputActionMap.FindAction("Horizontal Movement").performed += Move;
+        _inputActionMap.FindAction("Horizontal Movement").canceled += StoppedMoving;
+        _inputActionMap.FindAction("Crouch").performed += Crouch;
+        _inputActionMap.FindAction("Crouch").canceled += StoppedCrouching;
+        _inputActionMap.FindAction("Fly").performed += Fly;
+        _inputActionMap.FindAction("Fly").canceled += StoppedFlying;
     }
 
     private void OnDisable()
     {
-        _playerInput.Disable();
-        _playerInput.Player.HorizontalMovement.performed -= Move;
-        _playerInput.Player.HorizontalMovement.canceled -= StoppedMoving;
-        _playerInput.Player.Crouch.performed -= Crouch;
-        _playerInput.Player.Crouch.canceled -= StoppedCrouching;
-        _playerInput.Player.Fly.performed -= Fly;
-        _playerInput.Player.Fly.canceled -= StoppedFlying;
+        _inputActionMap.FindAction("Horizontal Movement").performed -= Move;
+        _inputActionMap.FindAction("Horizontal Movement").canceled -= StoppedMoving;
+        _inputActionMap.FindAction("Crouch").performed -= Crouch;
+        _inputActionMap.FindAction("Crouch").canceled -= StoppedCrouching;
+        _inputActionMap.FindAction("Fly").performed -= Fly;
+        _inputActionMap.FindAction("Fly").canceled -= StoppedFlying;
+        _inputActionMap.Disable();
     }
 
     private void Update()
