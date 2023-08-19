@@ -198,7 +198,7 @@ MonoBehaviour:
     m_ActionId: 9da8aab3-a6f7-48d8-ab1f-1b15a383b8f0
     m_ActionName: Player/Fly[/Keyboard/space,/Keyboard/w,/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Keyboard
+  m_DefaultControlScheme: Keyboard Right
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
