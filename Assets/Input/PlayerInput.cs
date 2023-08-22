@@ -55,9 +55,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Join"",
+                    ""name"": ""Join Player 1"",
                     ""type"": ""Button"",
                     ""id"": ""e17b43e2-95a9-41be-89cd-2d5851a83db4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Join Player 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""0456f349-4105-45de-9458-bd545b8f8015"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -182,7 +191,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard Left"",
-                    ""action"": ""Join"",
+                    ""action"": ""Join Player 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -193,7 +202,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard Right"",
-                    ""action"": ""Join"",
+                    ""action"": ""Join Player 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -230,7 +239,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_HorizontalMovement = m_Player.FindAction("Horizontal Movement", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Fly = m_Player.FindAction("Fly", throwIfNotFound: true);
-        m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
+        m_Player_JoinPlayer1 = m_Player.FindAction("Join Player 1", throwIfNotFound: true);
+        m_Player_JoinPlayer2 = m_Player.FindAction("Join Player 2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,7 +305,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HorizontalMovement;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Fly;
-    private readonly InputAction m_Player_Join;
+    private readonly InputAction m_Player_JoinPlayer1;
+    private readonly InputAction m_Player_JoinPlayer2;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -303,7 +314,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @HorizontalMovement => m_Wrapper.m_Player_HorizontalMovement;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player_Fly;
-        public InputAction @Join => m_Wrapper.m_Player_Join;
+        public InputAction @JoinPlayer1 => m_Wrapper.m_Player_JoinPlayer1;
+        public InputAction @JoinPlayer2 => m_Wrapper.m_Player_JoinPlayer2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,9 +334,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started += instance.OnFly;
             @Fly.performed += instance.OnFly;
             @Fly.canceled += instance.OnFly;
-            @Join.started += instance.OnJoin;
-            @Join.performed += instance.OnJoin;
-            @Join.canceled += instance.OnJoin;
+            @JoinPlayer1.started += instance.OnJoinPlayer1;
+            @JoinPlayer1.performed += instance.OnJoinPlayer1;
+            @JoinPlayer1.canceled += instance.OnJoinPlayer1;
+            @JoinPlayer2.started += instance.OnJoinPlayer2;
+            @JoinPlayer2.performed += instance.OnJoinPlayer2;
+            @JoinPlayer2.canceled += instance.OnJoinPlayer2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -338,9 +353,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started -= instance.OnFly;
             @Fly.performed -= instance.OnFly;
             @Fly.canceled -= instance.OnFly;
-            @Join.started -= instance.OnJoin;
-            @Join.performed -= instance.OnJoin;
-            @Join.canceled -= instance.OnJoin;
+            @JoinPlayer1.started -= instance.OnJoinPlayer1;
+            @JoinPlayer1.performed -= instance.OnJoinPlayer1;
+            @JoinPlayer1.canceled -= instance.OnJoinPlayer1;
+            @JoinPlayer2.started -= instance.OnJoinPlayer2;
+            @JoinPlayer2.performed -= instance.OnJoinPlayer2;
+            @JoinPlayer2.canceled -= instance.OnJoinPlayer2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -381,6 +399,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnHorizontalMovement(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
-        void OnJoin(InputAction.CallbackContext context);
+        void OnJoinPlayer1(InputAction.CallbackContext context);
+        void OnJoinPlayer2(InputAction.CallbackContext context);
     }
 }
