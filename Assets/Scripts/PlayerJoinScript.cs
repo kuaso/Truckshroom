@@ -38,7 +38,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         _spawned[0] = true;
-        UnityEngine.InputSystem.PlayerInput.Instantiate(player1Prefab, controlScheme: "Keyboard Left", playerIndex: 0);
+        UnityEngine.InputSystem.PlayerInput.Instantiate(player1Prefab, controlScheme: "Keyboard Left", playerIndex: 0, pairWithDevice: Keyboard.current);
         Debug.Log($"Player 1 joined"); // Array is 0 indexed, but this is really player 1
     }
 
@@ -50,7 +50,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         _spawned[1] = true;
-        UnityEngine.InputSystem.PlayerInput.Instantiate(player2Prefab, controlScheme: "Keyboard Right", playerIndex: 1);
+        UnityEngine.InputSystem.PlayerInput.Instantiate(player2Prefab, controlScheme: "Keyboard Right", playerIndex: 1, pairWithDevice: Keyboard.current);
         Debug.Log($"Player 2 joined");
     }
 }
