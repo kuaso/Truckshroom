@@ -8,6 +8,7 @@ public class PlayerInputScript : MonoBehaviour
 {
     private InputActionMap _inputActionMap;
     private Rigidbody2D _rb;
+    private GameObject _player;
     private float _horizontalMovement;
     private float _verticalMovement;
 
@@ -16,10 +17,11 @@ public class PlayerInputScript : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
 
     private void Awake()
-    {   
+    {
         var inputActionAsset = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
         _inputActionMap = inputActionAsset.FindActionMap("Player");
         _rb = GetComponent<Rigidbody2D>();
+        _player = GetComponent<GameObject>();
     }
 
     private void OnEnable()
@@ -47,6 +49,13 @@ public class PlayerInputScript : MonoBehaviour
     private void Update()
     {
         _rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
+        var rbTransform = _rb.transform;
+        rbTransform.localScale = _rb.velocity.x switch
+        {
+            > 0f => new Vector3(1, 1f, 1f),
+            < 0f => new Vector3(-1, 1f, 1f),
+            _ => rbTransform.localScale
+        };
     }
 
     private void Move(InputAction.CallbackContext ctx)
