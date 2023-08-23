@@ -273,6 +273,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c7cccc7d7af42b19c9847419e65d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOne: {fileID: 7871236215028185005, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
+  playerTwo: {fileID: 4580667342937066720, guid: a642e4bcff84f6bba98e1b3b09a9efea, type: 3}
+  c: {fileID: 519420031}
+  minValues: {x: 0, y: 0, z: 0}
+  maxValues: {x: 0, y: 0, z: 0}
+  minZoom: 0
+  maxZoom: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
