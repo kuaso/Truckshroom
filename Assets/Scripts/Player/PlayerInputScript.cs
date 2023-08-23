@@ -8,7 +8,8 @@ public class PlayerInputScript : MonoBehaviour
 {
     private InputActionMap _inputActionMap;
     private Rigidbody2D _rb;
-    private GameObject _player;
+    private GameObject _staminaManager;
+    private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
 
@@ -21,7 +22,8 @@ public class PlayerInputScript : MonoBehaviour
         var inputActionAsset = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
         _inputActionMap = inputActionAsset.FindActionMap("Player");
         _rb = GetComponent<Rigidbody2D>();
-        _player = GetComponent<GameObject>();
+        _staminaManager = GameObject.Find("StaminaManager");
+        _stamina = _staminaManager.GetComponent<Stamina>();
     }
 
     private void OnEnable()
@@ -48,7 +50,15 @@ public class PlayerInputScript : MonoBehaviour
 
     private void Update()
     {
+        if (!_stamina.HasStamina)
+        {
+            _verticalMovement = 0f;
+        }
         _rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
+        if (_verticalMovement > 0f)
+        {
+            _stamina.TickSharedStamina();
+        }
         var rbTransform = _rb.transform;
         rbTransform.localScale = _rb.velocity.x switch
         {
@@ -77,7 +87,7 @@ public class PlayerInputScript : MonoBehaviour
     }
 
     // This is a button press, not a vector value. When this is called, we know that the button is being pressed/held.
-    private void Fly(InputAction.CallbackContext ctx) => _verticalMovement = 1f * verticalMultiplier;
-
+    private void Fly(InputAction.CallbackContext ctx) =>_verticalMovement = 1f * verticalMultiplier;
+    
     private void StoppedFlying(InputAction.CallbackContext ctx) => _verticalMovement = 0f;
 }
