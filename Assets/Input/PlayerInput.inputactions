@@ -33,9 +33,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Join",
+                    "name": "Join Player 1",
                     "type": "Button",
                     "id": "e17b43e2-95a9-41be-89cd-2d5851a83db4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Join Player 2",
+                    "type": "Button",
+                    "id": "0456f349-4105-45de-9458-bd545b8f8015",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,7 +169,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard Left",
-                    "action": "Join",
+                    "action": "Join Player 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -171,7 +180,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard Right",
-                    "action": "Join",
+                    "action": "Join Player 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

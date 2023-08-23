@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 396927862}
   - component: {fileID: 396927861}
-  - component: {fileID: 396927863}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -153,25 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_MaxPlayerCount: 2
   m_AllowJoining: 1
-  m_JoinBehavior: 2
+  m_JoinBehavior: 1
   m_PlayerJoinedEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: cc2494eda07da8a989f4395ba1f14170, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_PlayerLeftEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -212,7 +199,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 --- !u!1001 &594398258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -381,15 +367,11 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &1231436788
-=======
---- !u!114 &396927863
->>>>>>> 96ff52cb4bc0e47fb552112f0665c1c537eaa618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1231436787}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -549,16 +531,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 407676097473579271, guid: ba3afd2398b5345b4b08401578699ef9, type: 3}
   m_PrefabInstance: {fileID: 1481789207}
   m_PrefabAsset: {fileID: 0}
-=======
-  m_GameObject: {fileID: 396927860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc2494eda07da8a989f4395ba1f14170, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1Prefab: {fileID: 3411263281092796528, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
-  player2Prefab: {fileID: 8775356136045742098, guid: a642e4bcff84f6bba98e1b3b09a9efea, type: 3}
->>>>>>> 96ff52cb4bc0e47fb552112f0665c1c537eaa618
 --- !u!1 &1798828975
 GameObject:
   m_ObjectHideFlags: 0
