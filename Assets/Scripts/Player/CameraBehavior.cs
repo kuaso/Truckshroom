@@ -51,6 +51,9 @@ public class CameraBehavior : MonoBehaviour
         {
             targetTwoY = maxValues.y;
         }
+
+        float targetX = (targetOneX + targetTwoX) / 2;
+        float targetY = (targetOneY + targetTwoY) / 2;
         transform.position = new Vector3(targetX, targetY, transform.position.z);
 
     }
