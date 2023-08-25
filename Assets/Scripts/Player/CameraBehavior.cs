@@ -33,13 +33,36 @@ public class CameraBehavior : MonoBehaviour
 
     private float[] findPosition()
     {
-        float targetOneX = playerOne.position.x + 1.5f;
-        float targetTwoX = playerTwo.position.x + 1.5f;
+        float targetOneX = playerOne.position.x;
+        float targetTwoX = playerTwo.position.x;
+
+        if (targetOneX > targetTwoX)
+        {
+            targetOneX = playerOne.position.x + 1.5f;
+            targetTwoX = playerTwo.position.x - 1.5f;
+        }
+        else
+        {
+            targetOneX = playerOne.position.x - 1.5f;
+            targetTwoX = playerTwo.position.x + 1.5f;
+        }
+        
         targetOneX = Mathf.Clamp(targetOneX, minValues.x, maxValues.x);
         targetTwoX = Mathf.Clamp(targetTwoX, minValues.x, maxValues.x);
 
-        float targetOneY = playerOne.position.y + 1.5f;
-        float targetTwoY = playerTwo.position.y + 1.5f;
+        float targetOneY = playerOne.position.x;
+        float targetTwoY = playerTwo.position.x;
+
+        if (targetOneY > targetTwoY)
+        {
+            targetOneY = playerOne.position.y + 1.5f;
+            targetTwoY = playerTwo.position.y - 1.5f;
+        }
+        else
+        {
+            targetOneY = playerOne.position.y - 1.5f;
+            targetTwoY = playerTwo.position.y + 1.5f;
+        }
 
         targetOneY = Mathf.Clamp(targetOneY, minValues.y, maxValues.y);
         targetTwoY = Mathf.Clamp(targetTwoY, minValues.y, maxValues.y);
@@ -54,12 +77,12 @@ public class CameraBehavior : MonoBehaviour
         float xZoom = x/2;
         float yZoom = y/2;
 
-        float z = xZoom;
-        if (9 * xZoom > 16 * yZoom)
-        {
-            z = yZoom; 
-        }
+        float z = Mathf.Max(xZoom, yZoom);
 
+        Debug.Log("x: " + xZoom);
+        Debug.Log("y: " + yZoom);
+        Debug.Log("z: " + z);
+        z = Mathf.Clamp(z, minZoom, maxZoom);
         return z;
     }
 }
