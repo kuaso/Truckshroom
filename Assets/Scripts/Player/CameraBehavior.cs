@@ -83,11 +83,11 @@ public class CameraBehavior : MonoBehaviour
         float yZoom = y / 200;
 
         float z = xZoom;
-        if (9 * xZoom < 16 * yZoom)
+        if (9 * xZoom > 16 * yZoom)
         {
-            z = yZoom;
+            // float z = yZoom; TEMPORARILY COMMENTED OUT TO ALLOW COMPILATION
         }
 
-        return z;
+        return -1f; // THIS NEEDS TO BE FIXED! TEMP FIX TO ALLOW COMPILATION
     }
 }
