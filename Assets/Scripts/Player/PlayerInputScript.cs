@@ -1,18 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputScript : MonoBehaviour
 {
+    /*
+     * We have to use InputActionMap instead of directly calling new PlayerInput();
+     * This is because directly using PlayerInput controls both players instead of just the current sprite.
+     */
     private InputActionMap _inputActionMap;
     private Rigidbody2D _rb;
-    private GameObject _staminaManager;
     private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
 
+    [SerializeField] private GameObject pauseMenu;
     [SerializeField] private float horizontalMultiplier = 15f;
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
@@ -22,8 +24,8 @@ public class PlayerInputScript : MonoBehaviour
         var inputActionAsset = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
         _inputActionMap = inputActionAsset.FindActionMap("Player");
         _rb = GetComponent<Rigidbody2D>();
-        _staminaManager = GameObject.Find("StaminaManager");
-        _stamina = _staminaManager.GetComponent<Stamina>();
+        var staminaManager = GameObject.Find("StaminaManager");
+        _stamina = staminaManager.GetComponent<Stamina>();
     }
 
     private void OnEnable()
@@ -35,6 +37,7 @@ public class PlayerInputScript : MonoBehaviour
         _inputActionMap.FindAction("Crouch").canceled += StoppedCrouching;
         _inputActionMap.FindAction("Fly").performed += Fly;
         _inputActionMap.FindAction("Fly").canceled += StoppedFlying;
+        _inputActionMap.FindAction("Pause").performed += Pause;
     }
 
     private void OnDisable()
@@ -45,6 +48,7 @@ public class PlayerInputScript : MonoBehaviour
         _inputActionMap.FindAction("Crouch").canceled -= StoppedCrouching;
         _inputActionMap.FindAction("Fly").performed -= Fly;
         _inputActionMap.FindAction("Fly").canceled -= StoppedFlying;
+        _inputActionMap.FindAction("Pause").performed -= Pause;
         _inputActionMap.Disable();
     }
 
@@ -54,11 +58,13 @@ public class PlayerInputScript : MonoBehaviour
         {
             _verticalMovement = 0f;
         }
+
         _rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
             _stamina.TickSharedStamina();
         }
+
         var rbTransform = _rb.transform;
         rbTransform.localScale = _rb.velocity.x switch
         {
@@ -87,7 +93,12 @@ public class PlayerInputScript : MonoBehaviour
     }
 
     // This is a button press, not a vector value. When this is called, we know that the button is being pressed/held.
-    private void Fly(InputAction.CallbackContext ctx) =>_verticalMovement = 1f * verticalMultiplier;
-    
+    private void Fly(InputAction.CallbackContext ctx) => _verticalMovement = 1f * verticalMultiplier;
+
     private void StoppedFlying(InputAction.CallbackContext ctx) => _verticalMovement = 0f;
+
+    private void Pause(InputAction.CallbackContext ctx)
+    {
+        Instantiate(pauseMenu);
+    }
 }
