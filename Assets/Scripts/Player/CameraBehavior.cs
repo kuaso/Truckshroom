@@ -33,45 +33,40 @@ public class CameraBehavior : MonoBehaviour
 
     private float[] findPosition()
     {
-        float targetOneX = playerOne.position.x + 1.5f;
-        float targetTwoX = playerTwo.position.x + 1.5f;
-        if (targetOneX < minValues.x)
+        float targetOneX = playerOne.position.x;
+        float targetTwoX = playerTwo.position.x;
+
+        if (targetOneX > targetTwoX)
         {
-            targetOneX = minValues.x;
+            targetOneX = playerOne.position.x + 1.5f;
+            targetTwoX = playerTwo.position.x - 1.5f;
         }
-        else if (targetOneX > maxValues.x)
+        else
         {
-            targetOneX = maxValues.x;
+            targetOneX = playerOne.position.x - 1.5f;
+            targetTwoX = playerTwo.position.x + 1.5f;
+        }
+        
+        targetOneX = Mathf.Clamp(targetOneX, minValues.x, maxValues.x);
+        targetTwoX = Mathf.Clamp(targetTwoX, minValues.x, maxValues.x);
+
+        float targetOneY = playerOne.position.x;
+        float targetTwoY = playerTwo.position.x;
+
+        if (targetOneY > targetTwoY)
+        {
+            targetOneY = playerOne.position.y + 1.5f;
+            targetTwoY = playerTwo.position.y - 1.5f;
+        }
+        else
+        {
+            targetOneY = playerOne.position.y - 1.5f;
+            targetTwoY = playerTwo.position.y + 1.5f;
         }
 
-        if (targetTwoX < minValues.x)
-        {
-            targetTwoX = minValues.x;
-        }
-        else if (targetTwoX > maxValues.x)
-        {
-            targetTwoX = maxValues.x;
-        }
+        targetOneY = Mathf.Clamp(targetOneY, minValues.y, maxValues.y);
+        targetTwoY = Mathf.Clamp(targetTwoY, minValues.y, maxValues.y);
 
-        float targetOneY = playerOne.position.y + 1.5f;
-        float targetTwoY = playerTwo.position.y + 1.5f;
-        if (targetOneY < minValues.y)
-        {
-            targetOneY = minValues.y;
-        }
-        else if (targetOneY > maxValues.y)
-        {
-            targetOneY = maxValues.y;
-        }
-
-        if (targetTwoY < minValues.y)
-        {
-            targetTwoY = minValues.y;
-        }
-        else if (targetTwoY > maxValues.y)
-        {
-            targetTwoY = maxValues.y;
-        }
 
         float[] positions = { targetOneX, targetOneY, targetTwoX, targetTwoY };
         return positions;
@@ -79,15 +74,15 @@ public class CameraBehavior : MonoBehaviour
 
     private float zoom(float x, float y)
     {
-        float xZoom = x / 200;
-        float yZoom = y / 200;
+        float xZoom = x/2;
+        float yZoom = y/2;
 
-        float z = xZoom;
-        if (9 * xZoom > 16 * yZoom)
-        {
-            // float z = yZoom; TEMPORARILY COMMENTED OUT TO ALLOW COMPILATION
-        }
+        float z = Mathf.Max(xZoom, yZoom);
 
-        return -1f; // THIS NEEDS TO BE FIXED! TEMP FIX TO ALLOW COMPILATION
+        Debug.Log("x: " + xZoom);
+        Debug.Log("y: " + yZoom);
+        Debug.Log("z: " + z);
+        z = Mathf.Clamp(z, minZoom, maxZoom);
+        return z;
     }
 }
