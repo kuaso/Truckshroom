@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 86d6711ace64f6a8f9e2da179e714f79, type: 3}
+    - target: {fileID: 838695413290509539, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard Right
+      objectReference: {fileID: 0}
     - target: {fileID: 3411263281092796528, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
       propertyPath: m_Name
       value: Player2

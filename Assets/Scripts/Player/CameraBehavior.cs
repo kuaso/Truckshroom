@@ -79,9 +79,9 @@ public class CameraBehavior : MonoBehaviour
 
         float z = Mathf.Max(xZoom, yZoom);
 
-        Debug.Log("x: " + xZoom);
-        Debug.Log("y: " + yZoom);
-        Debug.Log("z: " + z);
+        // Debug.Log("x: " + xZoom);
+        // Debug.Log("y: " + yZoom);
+        // Debug.Log("z: " + z);
         z = Mathf.Clamp(z, minZoom, maxZoom);
         return z;
     }

@@ -55,24 +55,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Join Player 1"",
-                    ""type"": ""Button"",
-                    ""id"": ""e17b43e2-95a9-41be-89cd-2d5851a83db4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Join Player 2"",
-                    ""type"": ""Button"",
-                    ""id"": ""0456f349-4105-45de-9458-bd545b8f8015"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""8c2ec946-9750-4450-96c9-da9425cb0f06"",
@@ -195,28 +177,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e292f018-2f7a-46b3-ad94-b9ba8a28ce59"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Left"",
-                    ""action"": ""Join Player 1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""434aceb7-9417-40a9-8fc1-494f0d701ba4"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Right"",
-                    ""action"": ""Join Player 2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9b558103-a9b4-4710-bf06-fc9eb5106a5d"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -259,8 +219,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_HorizontalMovement = m_Player.FindAction("Horizontal Movement", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Fly = m_Player.FindAction("Fly", throwIfNotFound: true);
-        m_Player_JoinPlayer1 = m_Player.FindAction("Join Player 1", throwIfNotFound: true);
-        m_Player_JoinPlayer2 = m_Player.FindAction("Join Player 2", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
@@ -326,8 +284,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HorizontalMovement;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Fly;
-    private readonly InputAction m_Player_JoinPlayer1;
-    private readonly InputAction m_Player_JoinPlayer2;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
@@ -336,8 +292,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @HorizontalMovement => m_Wrapper.m_Player_HorizontalMovement;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player_Fly;
-        public InputAction @JoinPlayer1 => m_Wrapper.m_Player_JoinPlayer1;
-        public InputAction @JoinPlayer2 => m_Wrapper.m_Player_JoinPlayer2;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -357,12 +311,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started += instance.OnFly;
             @Fly.performed += instance.OnFly;
             @Fly.canceled += instance.OnFly;
-            @JoinPlayer1.started += instance.OnJoinPlayer1;
-            @JoinPlayer1.performed += instance.OnJoinPlayer1;
-            @JoinPlayer1.canceled += instance.OnJoinPlayer1;
-            @JoinPlayer2.started += instance.OnJoinPlayer2;
-            @JoinPlayer2.performed += instance.OnJoinPlayer2;
-            @JoinPlayer2.canceled += instance.OnJoinPlayer2;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -379,12 +327,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started -= instance.OnFly;
             @Fly.performed -= instance.OnFly;
             @Fly.canceled -= instance.OnFly;
-            @JoinPlayer1.started -= instance.OnJoinPlayer1;
-            @JoinPlayer1.performed -= instance.OnJoinPlayer1;
-            @JoinPlayer1.canceled -= instance.OnJoinPlayer1;
-            @JoinPlayer2.started -= instance.OnJoinPlayer2;
-            @JoinPlayer2.performed -= instance.OnJoinPlayer2;
-            @JoinPlayer2.canceled -= instance.OnJoinPlayer2;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -428,8 +370,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnHorizontalMovement(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
-        void OnJoinPlayer1(InputAction.CallbackContext context);
-        void OnJoinPlayer2(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
 }
