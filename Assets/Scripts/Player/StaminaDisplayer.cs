@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,6 +20,6 @@ public class StaminaDisplayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() => _tmp.text = _stamina.SharedStamina.ToString();
+    void Update() => _tmp.text = Math.Round(_stamina.SharedStamina, 3).ToString(CultureInfo.CurrentCulture);
     
 }
