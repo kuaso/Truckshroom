@@ -50,18 +50,18 @@ public class CameraBehavior : MonoBehaviour
         targetOneX = Mathf.Clamp(targetOneX, minValues.x, maxValues.x);
         targetTwoX = Mathf.Clamp(targetTwoX, minValues.x, maxValues.x);
 
-        float targetOneY = playerOne.position.x;
-        float targetTwoY = playerTwo.position.x;
+        float targetOneY = playerOne.position.y;
+        float targetTwoY = playerTwo.position.y;
 
         if (targetOneY > targetTwoY)
         {
-            targetOneY = playerOne.position.y + 1.5f;
-            targetTwoY = playerTwo.position.y - 1.5f;
+            targetOneY = playerOne.position.y + 5f;
+            targetTwoY = playerTwo.position.y - 5f;
         }
         else
         {
-            targetOneY = playerOne.position.y - 1.5f;
-            targetTwoY = playerTwo.position.y + 1.5f;
+            targetOneY = playerOne.position.y - 5f;
+            targetTwoY = playerTwo.position.y + 5f;
         }
 
         targetOneY = Mathf.Clamp(targetOneY, minValues.y, maxValues.y);
