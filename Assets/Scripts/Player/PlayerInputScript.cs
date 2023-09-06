@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputScript : MonoBehaviour
 {
+    
+    // TODO ATTEMPT TO FIX ONLY ONE PLAYER MOVING BY USING PLAYERINPUT() AND JUST USING SEPERATE MAPS FOR EACH PLAYER
+    // TODO WHAT SHOULD PROBABLY BE DONE IS THAT EACH SCRIPT IS A SUBSCRIPT OF AN (ABSTRACT?) PLAYER INPUT SCRIPT
+    
     /*
      * We have to use InputActionMap instead of directly calling new PlayerInput();
      * This is because directly using PlayerInput controls both players instead of just the current sprite.
