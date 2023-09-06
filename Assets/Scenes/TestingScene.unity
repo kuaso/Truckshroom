@@ -349,7 +349,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1212705693856087627, guid: fe310df1b30115cac940ea51002dc594, type: 3}
       propertyPath: rateOfDecreasePercent
-      value: 0.01
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8528745137038961079, guid: fe310df1b30115cac940ea51002dc594, type: 3}
       propertyPath: m_Name
