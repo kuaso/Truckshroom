@@ -163,15 +163,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""070eb0ab-320f-4a56-bbe5-b1114831e0be"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,17 +220,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c507fee2-dbd2-4d31-bff0-09895b400d1d"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -280,7 +260,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player2_HorizontalMovement = m_Player2.FindAction("Horizontal Movement", throwIfNotFound: true);
         m_Player2_Crouch = m_Player2.FindAction("Crouch", throwIfNotFound: true);
         m_Player2_Fly = m_Player2.FindAction("Fly", throwIfNotFound: true);
-        m_Player2_Pause = m_Player2.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -415,7 +394,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_HorizontalMovement;
     private readonly InputAction m_Player2_Crouch;
     private readonly InputAction m_Player2_Fly;
-    private readonly InputAction m_Player2_Pause;
     public struct Player2Actions
     {
         private @PlayerInput m_Wrapper;
@@ -423,7 +401,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @HorizontalMovement => m_Wrapper.m_Player2_HorizontalMovement;
         public InputAction @Crouch => m_Wrapper.m_Player2_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player2_Fly;
-        public InputAction @Pause => m_Wrapper.m_Player2_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,9 +419,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started += instance.OnFly;
             @Fly.performed += instance.OnFly;
             @Fly.canceled += instance.OnFly;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayer2Actions instance)
@@ -458,9 +432,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started -= instance.OnFly;
             @Fly.performed -= instance.OnFly;
             @Fly.canceled -= instance.OnFly;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayer2Actions instance)
@@ -508,6 +479,5 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnHorizontalMovement(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
     }
 }

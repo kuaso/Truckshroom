@@ -21,7 +21,7 @@ public class Player2InputScript : BasePlayerInputScript
         _playerInput.Player2.Crouch.canceled += StoppedCrouching;
         _playerInput.Player2.Fly.performed += Fly;
         _playerInput.Player2.Fly.canceled += StoppedFlying;
-        _playerInput.Player2.Pause.performed += Pause;
+        // Player 2 does not have a pause function. If both players pause, 2 pause menus will be instantiated.
     }
 
     private void OnDisable()
@@ -32,7 +32,6 @@ public class Player2InputScript : BasePlayerInputScript
         _playerInput.Player2.Crouch.canceled -= StoppedCrouching;
         _playerInput.Player2.Fly.performed -= Fly;
         _playerInput.Player2.Fly.canceled -= StoppedFlying;
-        _playerInput.Player2.Pause.performed -= Pause;
         _playerInput.Disable();
     }
 
