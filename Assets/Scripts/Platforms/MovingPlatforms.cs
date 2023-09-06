@@ -26,7 +26,7 @@ public class MovingPlatforma : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.transform.parent = null;
         }
