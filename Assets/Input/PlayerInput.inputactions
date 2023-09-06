@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Player",
+            "name": "Player1",
             "id": "a4763173-4fdb-4e77-8b8d-614229a590e0",
             "actions": [
                 {
@@ -77,56 +77,12 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Keyboard (Arrows)",
-                    "id": "a3a2f208-ca0e-4ed9-bdd7-f2726a7e1558",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "left",
-                    "id": "5756ccc1-cc0b-440d-b9e0-9f3b08a916e4",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard Right",
-                    "action": "Horizontal Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "765fbe4b-3774-40d7-896b-7ab56f48b53b",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard Right",
-                    "action": "Horizontal Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "95e9ae26-e065-4f75-a957-722bb178fb6c",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard Left",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "788afcdf-e0e6-42e6-ac2d-1886c10e6140",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard Right",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -144,7 +100,106 @@
                 },
                 {
                     "name": "",
-                    "id": "7e38c88c-b62e-440b-bff7-c910f10e4d18",
+                    "id": "9b558103-a9b4-4710-bf06-fc9eb5106a5d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player2",
+            "id": "7a1b7fd1-8fcf-4ae9-81cb-ee6bbee1d9f2",
+            "actions": [
+                {
+                    "name": "Horizontal Movement",
+                    "type": "Value",
+                    "id": "79e39f51-5bdc-456d-9692-f5ae52ce18b3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "e415e2d3-fad2-4c6d-897d-03624c184187",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fly",
+                    "type": "Value",
+                    "id": "58adc42d-483f-4f52-9660-8b8399d64333",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "070eb0ab-320f-4a56-bbe5-b1114831e0be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Keyboard (Arrows)",
+                    "id": "54d606b7-5c2e-4b01-a8b2-0434b5165f7f",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "4cf45af1-b20e-403d-8355-06cf48ea006d",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Right",
+                    "action": "Horizontal Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "9d1c2956-5e5a-4cea-a80e-0c3311c2de58",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Right",
+                    "action": "Horizontal Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ce375078-51aa-47eb-8c8a-dd2f2c62c57f",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Right",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b8563dc-2a01-4ce3-92f7-93071401113d",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -155,7 +210,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9b558103-a9b4-4710-bf06-fc9eb5106a5d",
+                    "id": "c507fee2-dbd2-4d31-bff0-09895b400d1d",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
