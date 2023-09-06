@@ -23,4 +23,12 @@ public class MovingPlatforma : MonoBehaviour
             collision.gameObject.transform.parent = transform;
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("player"))
+        {
+            collision.gameObject.transform.parent = null;
+        }
+    }
 }
