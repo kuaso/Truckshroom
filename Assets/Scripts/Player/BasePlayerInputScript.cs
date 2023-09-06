@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/**
+ * This class is meant to be extended on by the PlayerInputScript class.
+ * onEnable and onDisable methods should be written by the child class.
+ */
 public abstract class BasePlayerInputScript : MonoBehaviour
 {
     private Stamina _stamina;
