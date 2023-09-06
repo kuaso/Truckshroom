@@ -154,7 +154,7 @@ MonoBehaviour:
     m_ActionName: Player/Fly[/Keyboard/space,/Keyboard/w,/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard Left
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &6067091982543028619

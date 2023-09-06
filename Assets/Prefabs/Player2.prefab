@@ -13,6 +13,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 86d6711ace64f6a8f9e2da179e714f79, type: 3}
     - target: {fileID: 838695413290509539, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: 7a1b7fd1-8fcf-4ae9-81cb-ee6bbee1d9f2
+      objectReference: {fileID: 0}
+    - target: {fileID: 838695413290509539, guid: 99c5c4b90055f6e999673efc1729e437, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Keyboard Right
       objectReference: {fileID: 0}
