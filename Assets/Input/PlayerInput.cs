@@ -222,6 +222,127 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menuing"",
+            ""id"": ""fbab9ddd-ada8-4748-9a47-8d978aaa070a"",
+            ""actions"": [
+                {
+                    ""name"": ""Navigate Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""c13a4c47-1928-450e-b5bf-93c88233d0d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Navigate Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""3db07efe-c636-40c1-b032-516468b582f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0cb3c5f-227c-4748-a610-bc50a839bc9f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""873131d6-8afe-45ce-87d2-56a4c82a6661"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""02c6a977-f145-4392-b289-636671ffb53b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Left"",
+                    ""action"": ""Navigate Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46ce041c-3caf-4d74-8111-d709659108d9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Right"",
+                    ""action"": ""Navigate Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f0810e2-90fd-45a5-86e4-e4eacd64118a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Left"",
+                    ""action"": ""Navigate Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""740ab099-e674-4617-b394-44eeb5813cf3"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Right"",
+                    ""action"": ""Navigate Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ae983b6-c1fb-470e-9c35-e82ab48c3568"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Left"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49201135-88d6-4383-bc09-d86dbb49c1f9"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Right"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d87ca025-49f1-4503-9f54-bd54d36ce7fd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Left;Keyboard Right"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -260,6 +381,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player2_HorizontalMovement = m_Player2.FindAction("Horizontal Movement", throwIfNotFound: true);
         m_Player2_Crouch = m_Player2.FindAction("Crouch", throwIfNotFound: true);
         m_Player2_Fly = m_Player2.FindAction("Fly", throwIfNotFound: true);
+        // Menuing
+        m_Menuing = asset.FindActionMap("Menuing", throwIfNotFound: true);
+        m_Menuing_NavigateUp = m_Menuing.FindAction("Navigate Up", throwIfNotFound: true);
+        m_Menuing_NavigateDown = m_Menuing.FindAction("Navigate Down", throwIfNotFound: true);
+        m_Menuing_Select = m_Menuing.FindAction("Select", throwIfNotFound: true);
+        m_Menuing_Back = m_Menuing.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -449,6 +576,76 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public Player2Actions @Player2 => new Player2Actions(this);
+
+    // Menuing
+    private readonly InputActionMap m_Menuing;
+    private List<IMenuingActions> m_MenuingActionsCallbackInterfaces = new List<IMenuingActions>();
+    private readonly InputAction m_Menuing_NavigateUp;
+    private readonly InputAction m_Menuing_NavigateDown;
+    private readonly InputAction m_Menuing_Select;
+    private readonly InputAction m_Menuing_Back;
+    public struct MenuingActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MenuingActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NavigateUp => m_Wrapper.m_Menuing_NavigateUp;
+        public InputAction @NavigateDown => m_Wrapper.m_Menuing_NavigateDown;
+        public InputAction @Select => m_Wrapper.m_Menuing_Select;
+        public InputAction @Back => m_Wrapper.m_Menuing_Back;
+        public InputActionMap Get() { return m_Wrapper.m_Menuing; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuingActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuingActionsCallbackInterfaces.Add(instance);
+            @NavigateUp.started += instance.OnNavigateUp;
+            @NavigateUp.performed += instance.OnNavigateUp;
+            @NavigateUp.canceled += instance.OnNavigateUp;
+            @NavigateDown.started += instance.OnNavigateDown;
+            @NavigateDown.performed += instance.OnNavigateDown;
+            @NavigateDown.canceled += instance.OnNavigateDown;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+            @Back.started += instance.OnBack;
+            @Back.performed += instance.OnBack;
+            @Back.canceled += instance.OnBack;
+        }
+
+        private void UnregisterCallbacks(IMenuingActions instance)
+        {
+            @NavigateUp.started -= instance.OnNavigateUp;
+            @NavigateUp.performed -= instance.OnNavigateUp;
+            @NavigateUp.canceled -= instance.OnNavigateUp;
+            @NavigateDown.started -= instance.OnNavigateDown;
+            @NavigateDown.performed -= instance.OnNavigateDown;
+            @NavigateDown.canceled -= instance.OnNavigateDown;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+            @Back.started -= instance.OnBack;
+            @Back.performed -= instance.OnBack;
+            @Back.canceled -= instance.OnBack;
+        }
+
+        public void RemoveCallbacks(IMenuingActions instance)
+        {
+            if (m_Wrapper.m_MenuingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuingActions @Menuing => new MenuingActions(this);
     private int m_KeyboardLeftSchemeIndex = -1;
     public InputControlScheme KeyboardLeftScheme
     {
@@ -479,5 +676,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnHorizontalMovement(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
+    }
+    public interface IMenuingActions
+    {
+        void OnNavigateUp(InputAction.CallbackContext context);
+        void OnNavigateDown(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
