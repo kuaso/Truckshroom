@@ -8,8 +8,7 @@ public class MovingPlatforma : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player");
-                Debug.Log("Player on platform");
+
                 collision.gameObject.transform.parent = transform;
             
         }
