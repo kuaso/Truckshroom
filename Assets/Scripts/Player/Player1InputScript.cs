@@ -36,5 +36,5 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void Update() => UpdateLoop(_rb);
+    private void FixedUpdate() => UpdateLoop(_rb);
 }
