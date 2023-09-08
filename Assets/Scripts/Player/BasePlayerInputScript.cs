@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,7 +22,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         _stamina = staminaManager.GetComponent<Stamina>();
     }
 
-    protected void UpdateLoop(Rigidbody2D rb)
+    protected void UpdateLoop(Rigidbody2D rb, int playerNumber)
     {
         if (!_stamina.HasStamina)
         {
@@ -34,8 +32,13 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
-            _stamina.TickSharedStamina();
+            _stamina.TickSharedStamina(playerNumber);
         }
+        
+        // Compare current y pos to previous y pos, with some tolerance for floating points doesn't work
+        // rb.velocity does not work as it will be ${gravity} by default
+        // TODO FIND A WAY to only regen when on the ground _stamina.RequestStaminaRegeneration(playerNumber);
+
 
         var rbTransform = rb.transform;
         rbTransform.localScale = rb.velocity.x switch
@@ -45,7 +48,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _ => rbTransform.localScale
         };
     }
-    
+
     protected void Move(InputAction.CallbackContext ctx)
     {
         _horizontalMovement = ctx.ReadValue<Vector2>().x * horizontalMultiplier;

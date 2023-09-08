@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player2InputScript : BasePlayerInputScript
@@ -35,5 +33,5 @@ public class Player2InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb);
+    private void FixedUpdate() => UpdateLoop(_rb, 1);
 }

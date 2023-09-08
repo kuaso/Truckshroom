@@ -1,12 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player1InputScript : BasePlayerInputScript
 {
     
-    // TODO ATTEMPT TO FIX ONLY ONE PLAYER MOVING BY USING PLAYERINPUT() AND JUST USING SEPERATE MAPS FOR EACH PLAYER
-    // TODO WHAT SHOULD PROBABLY BE DONE IS THAT EACH SCRIPT IS A SUBSCRIPT OF AN (ABSTRACT?) PLAYER INPUT SCRIPT
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
 
@@ -36,5 +32,5 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb);
+    private void FixedUpdate() => UpdateLoop(_rb, 0);
 }
