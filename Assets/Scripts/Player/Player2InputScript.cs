@@ -7,10 +7,13 @@ public class Player2InputScript : BasePlayerInputScript
     // TODO WHAT SHOULD PROBABLY BE DONE IS THAT EACH SCRIPT IS A SUBSCRIPT OF AN (ABSTRACT?) PLAYER INPUT SCRIPT
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
-
+    private Collider2D _coll;
+    public Player2InputScript() : base(1) { }
+    
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _coll = GetComponent<Collider2D>();
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player2.HorizontalMovement.performed += Move;
@@ -33,5 +36,5 @@ public class Player2InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb, 1);
+    private void FixedUpdate() => UpdateLoop(_rb, _coll, 1);
 }
