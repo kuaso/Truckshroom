@@ -41,11 +41,12 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
 
         var rbTransform = rb.transform;
+        var localScale = rbTransform.localScale;
         rbTransform.localScale = rb.velocity.x switch
         {
-            > 0f => new Vector3(1, 1f, 1f),
-            < 0f => new Vector3(-1, 1f, 1f),
-            _ => rbTransform.localScale
+            > 0f => new Vector3(Mathf.Abs(localScale.x), localScale.y, localScale.z),
+            < 0f => new Vector3(Mathf.Abs(localScale.x) * -1, localScale.y, localScale.z),
+            _ => localScale
         };
     }
 
