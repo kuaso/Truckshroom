@@ -40,13 +40,14 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         // TODO FIND A WAY to only regen when on the ground _stamina.RequestStaminaRegeneration(playerNumber);
 
 
-        // var rbTransform = rb.transform;
-        // rbTransform.localScale = rb.velocity.x switch
-        // {
-        //     > 0f => new Vector3(1, 1f, 1f),
-        //     < 0f => new Vector3(-1, 1f, 1f),
-        //     _ => rbTransform.localScale
-        // };
+        var rbTransform = rb.transform;
+        var localScale = rbTransform.localScale;
+        rbTransform.localScale = rb.velocity.x switch
+        {
+            > 0f => new Vector3(Mathf.Abs(localScale.x), localScale.y, localScale.z),
+            < 0f => new Vector3(Mathf.Abs(localScale.x) * -1, localScale.y, localScale.z),
+            _ => localScale
+        };
     }
 
     protected void Move(InputAction.CallbackContext ctx)
