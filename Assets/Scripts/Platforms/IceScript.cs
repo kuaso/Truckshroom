@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// A LOT OF TESTING is needed before this can be considered remotely ready for production
 public class IceScript : MonoBehaviour
 {
-    private List<GameObject> _gameObjectsToAlter = new();
+    private readonly List<GameObject> _gameObjectsToAlter = new();
     private float _pastXPosition;
 
     private void OnEnable()
     {
         _pastXPosition = transform.position.x;
     }
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,7 +30,7 @@ public class IceScript : MonoBehaviour
             _gameObjectsToAlter.Remove(collision.gameObject);
         }
     }
-    
+
     private void FixedUpdate()
     {
         // We want moving left to be negative and moving right to be positive

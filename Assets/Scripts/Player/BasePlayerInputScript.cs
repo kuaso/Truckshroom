@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
  */
 public abstract class BasePlayerInputScript : MonoBehaviour
 {
-    private int _playerNumber;
+    private readonly int _playerNumber;
     private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
@@ -17,18 +17,18 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
 
-    public BasePlayerInputScript(int playerNumber)
+    protected BasePlayerInputScript(int playerNumber)
     {
-        this._playerNumber = playerNumber;
+        _playerNumber = playerNumber;
     }
-    
+
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
         _stamina = staminaManager.GetComponent<Stamina>();
     }
 
-    protected void UpdateLoop(Rigidbody2D rb, Collider2D coll, int playerNumber)
+    protected void UpdateLoop(Rigidbody2D rb)
     {
         if (!_stamina.HasStamina)
         {
@@ -38,12 +38,8 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
-            _stamina.TickSharedStamina(playerNumber);
+            _stamina.TickSharedStamina();
         }
-        
-        // Compare current y pos to previous y pos, with some tolerance for floating points doesn't work
-        // rb.velocity does not work as it will be ${gravity} by default
-        // TODO FIND A WAY to only regen when on the ground _stamina.RequestStaminaRegeneration(playerNumber);
 
         var rbTransform = rb.transform;
         var localScale = rbTransform.localScale;
@@ -54,6 +50,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _ => localScale
         };
     }
+
     protected void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("AllowStaminaRecharge"))
@@ -62,10 +59,18 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         }
     }
 
+    protected void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("AllowStaminaRecharge"))
+        {
+            _stamina.StopStaminaRegeneration(_playerNumber);
+        }
+    }
+
     protected void Move(InputAction.CallbackContext ctx)
     {
         _horizontalMovement = ctx.ReadValue<Vector2>().x * horizontalMultiplier;
-        // TODO Flip sprite based on direction moved
+        // Sprite is flipped based on direction moved in UpdateLoop()
     }
 
     protected void StoppedMoving(InputAction.CallbackContext ctx) => _horizontalMovement = 0f;

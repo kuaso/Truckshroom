@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class Player2InputScript : BasePlayerInputScript
 {
-    
-    // TODO ATTEMPT TO FIX ONLY ONE PLAYER MOVING BY USING PLAYERINPUT() AND JUST USING SEPERATE MAPS FOR EACH PLAYER
-    // TODO WHAT SHOULD PROBABLY BE DONE IS THAT EACH SCRIPT IS A SUBSCRIPT OF AN (ABSTRACT?) PLAYER INPUT SCRIPT
+    private const int PlayerNumber = 1;
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
-    private Collider2D _coll;
-    public Player2InputScript() : base(1) { }
-    
+
+    public Player2InputScript() : base(PlayerNumber)
+    {
+    }
+
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _coll = GetComponent<Collider2D>();
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player2.HorizontalMovement.performed += Move;
@@ -36,5 +35,5 @@ public class Player2InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb, _coll, 1);
+    private void FixedUpdate() => UpdateLoop(_rb);
 }

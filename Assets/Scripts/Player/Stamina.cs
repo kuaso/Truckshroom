@@ -10,13 +10,13 @@ public class Stamina : MonoBehaviour
     public float SharedStamina { get; private set; } = 100f;
     public bool HasStamina => SharedStamina > 0f;
 
-    public void TickSharedStamina(int playerNumber)
+    public void TickSharedStamina()
     {
-        _canRegenerate[playerNumber] = false;
         SharedStamina -= rateOfDecreasePercent;
     }
 
     public void RequestStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = true;
+    public void StopStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = false;
 
     public void FixedUpdate()
     {
