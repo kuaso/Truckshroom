@@ -21,7 +21,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     {
         _playerNumber = playerNumber;
     }
-    
+
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
@@ -50,6 +50,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _ => localScale
         };
     }
+
     protected void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("AllowStaminaRecharge"))
@@ -57,6 +58,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _stamina.RequestStaminaRegeneration(_playerNumber);
         }
     }
+
     protected void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("AllowStaminaRecharge"))

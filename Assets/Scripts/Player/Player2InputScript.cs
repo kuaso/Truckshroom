@@ -5,9 +5,11 @@ public class Player2InputScript : BasePlayerInputScript
     private const int PlayerNumber = 1;
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
-    
-    public Player2InputScript() : base(PlayerNumber) { }
-    
+
+    public Player2InputScript() : base(PlayerNumber)
+    {
+    }
+
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();

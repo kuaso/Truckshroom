@@ -5,8 +5,10 @@ public class Player1InputScript : BasePlayerInputScript
     private const int PlayerNumber = 0;
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
-    
-    public Player1InputScript() : base(PlayerNumber) { }
+
+    public Player1InputScript() : base(PlayerNumber)
+    {
+    }
 
     private void OnEnable()
     {
@@ -33,6 +35,6 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Player1.Pause.performed -= Pause;
         _playerInput.Disable();
     }
-    
+
     private void FixedUpdate() => UpdateLoop(_rb);
 }
