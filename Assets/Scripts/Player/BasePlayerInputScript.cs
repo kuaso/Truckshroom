@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -57,7 +56,6 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     }
     protected void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("ida");
         if (other.gameObject.CompareTag("AllowStaminaRecharge"))
         {
             _stamina.RequestStaminaRegeneration(_playerNumber);
