@@ -559,7 +559,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1212705693856087627, guid: fe310df1b30115cac940ea51002dc594, type: 3}
       propertyPath: rateOfDecreasePercent
-      value: 0.01
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8528745137038961079, guid: fe310df1b30115cac940ea51002dc594, type: 3}
       propertyPath: m_Name
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 941552256}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: AllowStaminaRecharge
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1439,7 +1439,7 @@ GameObject:
   - component: {fileID: 1456462824}
   m_Layer: 3
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: AllowStaminaRecharge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
