@@ -21,13 +21,6 @@ public class Stamina : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_canRegenerate[0] || !_canRegenerate[1]) return;
-        if (SharedStamina < 100f)
-        {
-            SharedStamina += rateOfIncreasePercent;
-        }
-        else if (SharedStamina + rateOfIncreasePercent > 100f)
-        {
-            SharedStamina = 100f;
-        }
+        SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
     }
 }
