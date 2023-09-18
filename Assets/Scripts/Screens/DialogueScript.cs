@@ -35,4 +35,9 @@ public class DialogueScrit : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
     }
+
+    void NextLine()
+    {
+
+    }
 }
