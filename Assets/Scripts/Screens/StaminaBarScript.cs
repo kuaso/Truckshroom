@@ -9,16 +9,15 @@ public class StaminaBarScript : MonoBehaviour
     
     private void Awake()
     {
-        _stamina = GetComponent<Stamina>();
+        var staminaManager = GameObject.Find("StaminaManager");
+        _stamina = staminaManager.GetComponent<Stamina>();
         _staminaBarMask = GetComponent<Image>();
+        Debug.Log(_stamina);
+        Debug.Log(_staminaBarMask);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        
-        _staminaBarMask.fillAmount = 
-        
-            _stamina.SharedStamina;
+        _staminaBarMask.fillAmount =  _stamina.SharedStamina;
     }
 }

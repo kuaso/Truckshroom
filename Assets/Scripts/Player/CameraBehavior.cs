@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
-    [SerializeField] private Transform playerOne;
-    [SerializeField] private Transform playerTwo;
     [SerializeField] private Camera c;
-
     [SerializeField] public Vector3 minValues, maxValues;
     [SerializeField] private float minZoom, maxZoom;
+
+    private Transform playerOne;
+    private Transform playerTwo;
+    
+    private void Awake()
+    {
+        playerOne = GameObject.Find("Player1").transform;
+        playerTwo = GameObject.Find("Player2").transform;
+    }
 
     // Update is called once per frame
     void Update()
