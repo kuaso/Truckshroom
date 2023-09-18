@@ -5,7 +5,7 @@ using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueScrit : MonoBehaviour
+public class DialogueScript : MonoBehaviour
 {
     [SerializeField] TMP_Text textComponent;
     [SerializeField] string[] lines;
@@ -67,13 +67,23 @@ public class DialogueScrit : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void CompleteTex()
+    void CompleteText()
     {
+        StopAllCoroutines();
         textComponent.text = lines[index].ToString();
     }
 
     void skip(InputAction.CallbackContext ctx)
     {
-
+        if (lines[index].Equals(textComponent.text)) 
+        {
+            Debug.Log("same");
+            NextLine();
+        }
+        else
+        {
+            Debug.Log("diff");
+            CompleteText();
+        }
     }
 }
