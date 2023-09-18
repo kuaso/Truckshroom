@@ -18,6 +18,7 @@ public class StaminaBarScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _staminaBarMask.fillAmount =  _stamina.SharedStamina;
+        // SharedStamina is out of 100f, while fillAmount is out of 1f
+        _staminaBarMask.fillAmount = _stamina.SharedStamina / 100f;
     }
 }

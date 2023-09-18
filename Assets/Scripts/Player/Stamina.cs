@@ -5,7 +5,7 @@ public class Stamina : MonoBehaviour
     [SerializeField] private float rateOfDecreasePercent = 2f;
     [SerializeField] private float rateOfIncreasePercent = 5f;
 
-    private readonly bool[] _canRegenerate = { true, true };
+    private readonly bool[] _canRegenerate = { false, false };
 
     public float SharedStamina { get; private set; } = 100f;
     public bool HasStamina => SharedStamina > 0f;
