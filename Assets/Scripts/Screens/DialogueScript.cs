@@ -25,6 +25,7 @@ public class DialogueScript : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.Dialogue.Skip.performed -= skip;
+        _playerInput.Dialogue.Chat.performed -= StartDialogue;
         _playerInput.Disable();
     }
 
