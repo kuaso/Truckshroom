@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueScrit : MonoBehaviour
 {
@@ -9,11 +11,27 @@ public class DialogueScrit : MonoBehaviour
     [SerializeField] string[] lines;
     [SerializeField] float speed;
 
+    private PlayerInput _playerInput;
     private int index;
+
+    private void OnEnable()
+    {
+        _playerInput = new PlayerInput();
+        _playerInput.Enable();
+        _playerInput.Dialogue.Skip.performed += skip;
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Dialogue.Skip.canceled -= skip;
+        _playerInput.Disable();
+    }
+
     void Start()
     {
         textComponent.text = string.Empty;
         StartDialogue();
+    
     }
 
     // Update is called once per frame
@@ -37,6 +55,24 @@ public class DialogueScrit : MonoBehaviour
     }
 
     void NextLine()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            textComponent.text = string.Empty;
+            StartCoroutine(TypeLine());
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    void CompleteTex()
+    {
+        textComponent.text = lines[index].ToString();
+    }
+
+    void skip(InputAction.CallbackContext ctx)
     {
 
     }
