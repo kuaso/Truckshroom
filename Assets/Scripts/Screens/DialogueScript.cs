@@ -19,28 +19,26 @@ public class DialogueScript : MonoBehaviour
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Dialogue.Skip.performed += skip;
+        _playerInput.Dialogue.Chat.performed += StartDialogue;
     }
 
     private void OnDisable()
     {
-        _playerInput.Dialogue.Skip.canceled -= skip;
+        _playerInput.Dialogue.Skip.performed -= skip;
+        _playerInput.Dialogue.Chat.performed -= StartDialogue;
         _playerInput.Disable();
     }
 
     void Start()
     {
         textComponent.text = string.Empty;
-        StartDialogue();
+        gameObject.SetActive(false);
     
     }
 
-    // Update is called once per frame
-    void Update()
+    void StartDialogue(InputAction.CallbackContext ctx)
     {
-        
-    }
-    void StartDialogue()
-    {
+        gameObject.SetActive(true);
         index = 0;
         StartCoroutine(TypeLine());
     }
