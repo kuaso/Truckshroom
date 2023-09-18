@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class DialogueScrit : MonoBehaviour
 {
-    public TextMeshPro textComponent;
-    public string[] lines;
-    public float speed;
+    [SerializeField] TMP_Text textComponent;
+    [SerializeField] string[] lines;
+    [SerializeField] float speed;
 
     private int index;
     void Start()
     {
-        
+        textComponent.text = string.Empty;
+        StartDialogue();
     }
 
     // Update is called once per frame
@@ -23,6 +24,7 @@ public class DialogueScrit : MonoBehaviour
     void StartDialogue()
     {
         index = 0;
+        StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
