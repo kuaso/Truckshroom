@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Chat",
+                    "type": "Button",
+                    "id": "e35b37cf-3528-4cf6-9de2-76aea430c76c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "ad5a5c57-477d-45a2-acdc-69cc8fdc4a04",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "4123a7d8-800f-4c38-9447-1203f4ec4cbd",
@@ -106,6 +124,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "791d7f5f-ec7f-4cfb-8e4c-698b821409c7",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6788535-e3c4-4523-be8d-b234ba5c8dd4",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Chat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -317,54 +357,6 @@
                     "processors": "",
                     "groups": "Keyboard Left;Keyboard Right",
                     "action": "Back",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Dialogue",
-            "id": "6d530aba-3fcb-4231-8dce-51df41e0839a",
-            "actions": [
-                {
-                    "name": "Skip",
-                    "type": "Button",
-                    "id": "f06a3477-720d-4d11-b918-4d5e9a2d4a00",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Chat",
-                    "type": "Button",
-                    "id": "698b42d2-581f-411e-99ee-1ed5a93bd4aa",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "363a3331-8277-44b4-9af1-c77da3422a1c",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Skip",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fcff083f-10cb-4b5d-a178-fd5954ef20da",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Chat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
