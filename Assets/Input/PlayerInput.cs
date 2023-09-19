@@ -37,24 +37,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Chat"",
-                    ""type"": ""Button"",
-                    ""id"": ""e35b37cf-3528-4cf6-9de2-76aea430c76c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skip"",
-                    ""type"": ""Button"",
-                    ""id"": ""ad5a5c57-477d-45a2-acdc-69cc8fdc4a04"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""4123a7d8-800f-4c38-9447-1203f4ec4cbd"",
@@ -146,28 +128,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""791d7f5f-ec7f-4cfb-8e4c-698b821409c7"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e6788535-e3c4-4523-be8d-b234ba5c8dd4"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Chat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -383,6 +343,54 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""53da9343-de94-48f0-8970-5c7c1188cc87"",
+            ""actions"": [
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""f67ecae5-60e1-4802-8a2f-927484344f4e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Chat"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3c82375-ad87-423f-a1bb-c82c331be541"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""48e9f101-0ddc-46ae-8628-f0f6f2f910e8"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Chat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4097989-1eb4-4980-ac49-73fd3c40765a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -413,8 +421,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Player1
         m_Player1 = asset.FindActionMap("Player1", throwIfNotFound: true);
         m_Player1_HorizontalMovement = m_Player1.FindAction("Horizontal Movement", throwIfNotFound: true);
-        m_Player1_Chat = m_Player1.FindAction("Chat", throwIfNotFound: true);
-        m_Player1_Skip = m_Player1.FindAction("Skip", throwIfNotFound: true);
         m_Player1_Crouch = m_Player1.FindAction("Crouch", throwIfNotFound: true);
         m_Player1_Fly = m_Player1.FindAction("Fly", throwIfNotFound: true);
         m_Player1_Pause = m_Player1.FindAction("Pause", throwIfNotFound: true);
@@ -429,6 +435,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Menuing_NavigateDown = m_Menuing.FindAction("Navigate Down", throwIfNotFound: true);
         m_Menuing_Select = m_Menuing.FindAction("Select", throwIfNotFound: true);
         m_Menuing_Back = m_Menuing.FindAction("Back", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_Skip = m_Dialogue.FindAction("Skip", throwIfNotFound: true);
+        m_Dialogue_Chat = m_Dialogue.FindAction("Chat", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -491,8 +501,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player1;
     private List<IPlayer1Actions> m_Player1ActionsCallbackInterfaces = new List<IPlayer1Actions>();
     private readonly InputAction m_Player1_HorizontalMovement;
-    private readonly InputAction m_Player1_Chat;
-    private readonly InputAction m_Player1_Skip;
     private readonly InputAction m_Player1_Crouch;
     private readonly InputAction m_Player1_Fly;
     private readonly InputAction m_Player1_Pause;
@@ -501,8 +509,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public Player1Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @HorizontalMovement => m_Wrapper.m_Player1_HorizontalMovement;
-        public InputAction @Chat => m_Wrapper.m_Player1_Chat;
-        public InputAction @Skip => m_Wrapper.m_Player1_Skip;
         public InputAction @Crouch => m_Wrapper.m_Player1_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player1_Fly;
         public InputAction @Pause => m_Wrapper.m_Player1_Pause;
@@ -518,12 +524,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HorizontalMovement.started += instance.OnHorizontalMovement;
             @HorizontalMovement.performed += instance.OnHorizontalMovement;
             @HorizontalMovement.canceled += instance.OnHorizontalMovement;
-            @Chat.started += instance.OnChat;
-            @Chat.performed += instance.OnChat;
-            @Chat.canceled += instance.OnChat;
-            @Skip.started += instance.OnSkip;
-            @Skip.performed += instance.OnSkip;
-            @Skip.canceled += instance.OnSkip;
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
@@ -540,12 +540,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HorizontalMovement.started -= instance.OnHorizontalMovement;
             @HorizontalMovement.performed -= instance.OnHorizontalMovement;
             @HorizontalMovement.canceled -= instance.OnHorizontalMovement;
-            @Chat.started -= instance.OnChat;
-            @Chat.performed -= instance.OnChat;
-            @Chat.canceled -= instance.OnChat;
-            @Skip.started -= instance.OnSkip;
-            @Skip.performed -= instance.OnSkip;
-            @Skip.canceled -= instance.OnSkip;
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
@@ -704,6 +698,60 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MenuingActions @Menuing => new MenuingActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_Dialogue_Skip;
+    private readonly InputAction m_Dialogue_Chat;
+    public struct DialogueActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Skip => m_Wrapper.m_Dialogue_Skip;
+        public InputAction @Chat => m_Wrapper.m_Dialogue_Chat;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
+            @Chat.started += instance.OnChat;
+            @Chat.performed += instance.OnChat;
+            @Chat.canceled += instance.OnChat;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
+            @Chat.started -= instance.OnChat;
+            @Chat.performed -= instance.OnChat;
+            @Chat.canceled -= instance.OnChat;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
     private int m_KeyboardLeftSchemeIndex = -1;
     public InputControlScheme KeyboardLeftScheme
     {
@@ -725,8 +773,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayer1Actions
     {
         void OnHorizontalMovement(InputAction.CallbackContext context);
-        void OnChat(InputAction.CallbackContext context);
-        void OnSkip(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
@@ -743,5 +789,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnNavigateDown(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnSkip(InputAction.CallbackContext context);
+        void OnChat(InputAction.CallbackContext context);
     }
 }
