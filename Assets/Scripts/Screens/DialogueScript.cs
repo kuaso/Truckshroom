@@ -13,6 +13,7 @@ public class DialogueScript : MonoBehaviour
 
     private PlayerInput _playerInput;
     private int index;
+    private bool inRange;
 
     private void OnEnable()
     {
@@ -33,7 +34,24 @@ public class DialogueScript : MonoBehaviour
     {
         textComponent.text = string.Empty;
         gameObject.SetActive(false);
+        inRange = false;
     
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            inRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            inRange = false;
+        }
     }
 
     void StartDialogue(InputAction.CallbackContext ctx)
