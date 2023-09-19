@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO make stamina bar
 public class StaminaBarScript : MonoBehaviour
 {
     private Stamina _stamina;
@@ -18,7 +17,13 @@ public class StaminaBarScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // SharedStamina is out of 100f, while fillAmount is out of 1f
-        _staminaBarMask.fillAmount = _stamina.SharedStamina / 100f;
+        /*
+         * Explanation of how fillAmount is derived:
+         * 1f -: 1f means total fill. Minus a value after this to get rid of used up stamina
+         * Math.Abs(_stamina.ShareStamina - 100f): Get the absolute value of stamina used
+         * / 100f: Divide by 100 to the amount used out of 1f
+         * * 2: Multiply by 2 to double the rate that the stamina bar drains by visually (since it drains from 2 sides)
+         */
+        _staminaBarMask.fillAmount = 1f - (Mathf.Abs(_stamina.SharedStamina - 100f) / 100f * 2) ;
     }
 }
