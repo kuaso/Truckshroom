@@ -38,6 +38,7 @@ public class DialogueScript : MonoBehaviour
 
     void StartDialogue(InputAction.CallbackContext ctx)
     {
+        Debug.Log("dialogue should start");
         gameObject.SetActive(true);
         index = 0;
         StartCoroutine(TypeLine());
@@ -73,15 +74,17 @@ public class DialogueScript : MonoBehaviour
 
     void skip(InputAction.CallbackContext ctx)
     {
-        if (lines[index].Equals(textComponent.text)) 
+        if (gameObject.activeInHierarchy)
         {
-            Debug.Log("same");
-            NextLine();
+            if (lines[index].Equals(textComponent.text))
+            {
+                NextLine();
+            }
+            else
+            {
+                CompleteText();
+            }
         }
-        else
-        {
-            Debug.Log("diff");
-            CompleteText();
-        }
+
     }
 }
