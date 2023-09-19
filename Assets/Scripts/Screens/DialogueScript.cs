@@ -57,6 +57,10 @@ public class DialogueScript : MonoBehaviour
     void StartDialogue(InputAction.CallbackContext ctx)
     {
         Debug.Log("dialogue should start");
+        if (inRange)
+        {
+            //move the stuff here ltr
+        }
         gameObject.SetActive(true);
         index = 0;
         StartCoroutine(TypeLine());
