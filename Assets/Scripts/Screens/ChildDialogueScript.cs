@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueScript : MonoBehaviour
+public class ChildDialogueScript : MonoBehaviour
 {
     [SerializeField] TMP_Text textComponent;
     [SerializeField] string[] lines;
@@ -31,7 +31,7 @@ public class DialogueScript : MonoBehaviour
     private void Start()
     {
         textComponent.text = string.Empty;
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
         _inRange = false;
     }
 
@@ -54,11 +54,11 @@ public class DialogueScript : MonoBehaviour
     private void StartDialogue(InputAction.CallbackContext ctx)
     {
         Debug.Log("dialogue should start");
-        if (inRange)
+        if (_inRange)
         {
             //move the stuff here ltr
         }
-        gameObject.SetActive(true);
+        transform.parent.gameObject.SetActive(false);
         _index = 0;
         StartCoroutine(TypeLine());
     }
@@ -82,7 +82,7 @@ public class DialogueScript : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
         }
     }
     private void CompleteText()
