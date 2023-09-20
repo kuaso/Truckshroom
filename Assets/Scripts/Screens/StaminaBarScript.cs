@@ -8,11 +8,8 @@ public class StaminaBarScript : MonoBehaviour
     
     private void Awake()
     {
-        var staminaManager = GameObject.Find("StaminaManager");
-        _stamina = staminaManager.GetComponent<Stamina>();
+        _stamina = GetComponentInParent<Stamina>();
         _staminaBarMask = GetComponent<Image>();
-        Debug.Log(_stamina);
-        Debug.Log(_staminaBarMask);
     }
 
     private void FixedUpdate()

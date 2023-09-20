@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Stamina : MonoBehaviour
 {
-    [SerializeField] private float rateOfDecreasePercent = 2f;
+    [SerializeField] private float rateOfDecreasePercent = 0.4f;
     [SerializeField] private float rateOfIncreasePercent = 5f;
 
     private readonly bool[] _canRegenerate = { false, false };
