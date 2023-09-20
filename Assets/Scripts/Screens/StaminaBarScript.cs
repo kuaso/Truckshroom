@@ -10,6 +10,7 @@ public class StaminaBarScript : MonoBehaviour
     {
         _stamina = GetComponentInParent<Stamina>();
         _staminaBarMask = GetComponent<Image>();
+        Debug.LogError("TODO: Make stamina bar change colours depending on how much stamina is left");
     }
 
     private void FixedUpdate()
