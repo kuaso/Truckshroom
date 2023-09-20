@@ -3,69 +3,37 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ChildDialogueScript : MonoBehaviour
+public class ChildDialogueScript : ParentDialogueScript
 {
-    [SerializeField] TMP_Text textComponent;
-    [SerializeField] string[] lines;
-    [SerializeField] float speed;
+    [SerializeField] private TMP_Text textComponent;
+    [SerializeField] private string[] lines;
+    [SerializeField] private float speed = 0.1f;
 
     private PlayerInput _playerInput;
-    private int _index;
-    private bool _inRange;
+    public int Index { private get; set; }
 
     private void OnEnable()
     {
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Dialogue.Skip.performed += Skip;
-        _playerInput.Dialogue.Chat.performed += StartDialogue;
     }
 
     private void OnDisable()
     {
         _playerInput.Dialogue.Skip.performed -= Skip;
-        _playerInput.Dialogue.Chat.performed -= StartDialogue;
         _playerInput.Disable();
     }
 
     private void Start()
     {
         textComponent.text = string.Empty;
-        transform.parent.gameObject.SetActive(false);
-        _inRange = false;
+        gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public IEnumerator TypeLine()
     {
-        if (collision.CompareTag("Player"))
-        {
-            _inRange = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            _inRange = false;
-        }
-    }
-
-    private void StartDialogue(InputAction.CallbackContext ctx)
-    {
-        Debug.Log("dialogue should start");
-        if (_inRange)
-        {
-            //move the stuff here ltr
-        }
-        transform.parent.gameObject.SetActive(false);
-        _index = 0;
-        StartCoroutine(TypeLine());
-    }
-
-    private IEnumerator TypeLine()
-    {
-        foreach (var c in lines[_index])
+        foreach (var c in lines[Index])
         {
             textComponent.text += c;
             yield return new WaitForSeconds(speed);
@@ -74,9 +42,9 @@ public class ChildDialogueScript : MonoBehaviour
 
     private void NextLine()
     {
-        if (_index < lines.Length - 1)
+        if (Index < lines.Length - 1)
         {
-            _index++;
+            Index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         }
@@ -85,16 +53,17 @@ public class ChildDialogueScript : MonoBehaviour
             transform.parent.gameObject.SetActive(false);
         }
     }
+
     private void CompleteText()
     {
         StopAllCoroutines();
-        textComponent.text = lines[_index];
+        textComponent.text = lines[Index];
     }
 
     private void Skip(InputAction.CallbackContext ctx)
     {
         if (!gameObject.activeInHierarchy) return;
-        if (lines[_index].Equals(textComponent.text))
+        if (lines[Index].Equals(textComponent.text))
         {
             NextLine();
         }
@@ -102,6 +71,5 @@ public class ChildDialogueScript : MonoBehaviour
         {
             CompleteText();
         }
-
     }
 }
