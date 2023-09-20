@@ -10,8 +10,6 @@ public class StaminaBarScript : MonoBehaviour
     {
         _stamina = GetComponentInParent<Stamina>();
         _staminaBarMask = GetComponent<Image>();
-        Debug.Log(_stamina);
-        Debug.Log(_staminaBarMask);
     }
 
     private void FixedUpdate()
