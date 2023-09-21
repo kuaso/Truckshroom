@@ -439,12 +439,12 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0.3940481, y: -0.472425}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: -100
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 5
 --- !u!61 &281126852
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1097,12 +1097,12 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0.5129073, y: -1.0943375}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: -100
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 5
 --- !u!232 &588934898
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -7727,12 +7727,12 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0.3636766, y: -0.7006425}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: -100
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 5
 --- !u!61 &985578914
 BoxCollider2D:
   m_ObjectHideFlags: 0
