@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
+    private bool _isPaused;
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private float horizontalMultiplier = 15f;
@@ -26,8 +28,15 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     {
         var staminaManager = GameObject.Find("StaminaManager");
         _stamina = staminaManager.GetComponent<Stamina>();
+        PauseMenuScript.MenuDestroyed += UnPause;
     }
 
+    private void OnDestroy()
+    {
+        PauseMenuScript.MenuDestroyed -= UnPause;
+    }
+    private void UnPause() => _isPaused = false;
+    
     protected void UpdateLoop(Rigidbody2D rb)
     {
         if (!_stamina.HasStamina)
@@ -92,6 +101,8 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void Pause(InputAction.CallbackContext ctx)
     {
+        if (_isPaused) return;
         Instantiate(pauseMenu);
+        _isPaused = true;
     }
 }
