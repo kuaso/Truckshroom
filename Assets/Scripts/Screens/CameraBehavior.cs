@@ -28,11 +28,12 @@ public class CameraBehavior : MonoBehaviour
         var targetX = (targetOneX + targetTwoX) / 2;
         var targetY = (targetOneY + targetTwoY) / 2;
         var cameraTransform = transform;
-        cameraTransform.position = new Vector3(targetX, targetY, cameraTransform.position.z);
+        
 
         var xDistance = Mathf.Abs(targetOneX - targetTwoX);
         var yDistance = Mathf.Abs(targetOneY - targetTwoY);
         var z = Zoom(xDistance, yDistance);
+        cameraTransform.position = new Vector3(targetX, targetY, cameraTransform.position.z);
 
         c.orthographicSize = z;
     }
@@ -61,13 +62,13 @@ public class CameraBehavior : MonoBehaviour
 
         if (targetOneY > targetTwoY)
         {
-            targetOneY = playerOne.position.y + 5f;
+            targetOneY = playerOne.position.y + 10f;
             targetTwoY = playerTwo.position.y - 5f;
         }
         else
         {
             targetOneY = playerOne.position.y - 5f;
-            targetTwoY = playerTwo.position.y + 5f;
+            targetTwoY = playerTwo.position.y + 10f;
         }
 
         targetOneY = Mathf.Clamp(targetOneY, minValues.y, maxValues.y);
