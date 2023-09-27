@@ -35,7 +35,7 @@ public class CameraBehavior : MonoBehaviour
         var z = Zoom(xDistance, yDistance);
         cameraTransform.position = new Vector3(targetX, targetY, cameraTransform.position.z);
 
-        c.orthographicSize = z;
+        c.orthographicSize = z; //need to smooth zooming
     }
 
     private float[] FindPosition()
