@@ -4,20 +4,20 @@ using UnityEngine.SceneManagement;
 public class PauseMenuScript : MonoBehaviour
 {
     
-    public delegate void MenuDestroyed();
-    public static event MenuDestroyed OnMenuDestroyed;
+    public delegate void OnMenuDestroyed();
+    public static event OnMenuDestroyed MenuDestroyed;
 
     public void DestroyMenu()
     {
         Destroy(transform.root.gameObject);
-        OnMenuDestroyed?.Invoke();
+        MenuDestroyed?.Invoke();
     }
 
     public void ReturnToMainMenu() {
         SaveGame();
         SceneManager.LoadScene("MainMenu");
         // MenuDestroyed is still invoked as the scene it is no longer active in the new scene
-        OnMenuDestroyed?.Invoke();
+        MenuDestroyed?.Invoke();
     }
     
     private void SaveGame() {  
