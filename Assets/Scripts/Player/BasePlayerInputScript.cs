@@ -28,12 +28,12 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     {
         var staminaManager = GameObject.Find("StaminaManager");
         _stamina = staminaManager.GetComponent<Stamina>();
-        PauseMenuScript.MenuDestroyed += UnPause;
+        PauseMenuScript.OnMenuDestroyed += UnPause;
     }
 
     private void OnDestroy()
     {
-        PauseMenuScript.MenuDestroyed -= UnPause;
+        PauseMenuScript.OnMenuDestroyed -= UnPause;
     }
     private void UnPause() => _isPaused = false;
     
