@@ -3,17 +3,16 @@ using UnityEngine.UI;
 
 public class StaminaBarScript : MonoBehaviour
 {
-    private Stamina _stamina;
     private Image _staminaBarMask;
     
     private void Awake()
-    {
-        _stamina = GetComponentInParent<Stamina>();
+    { ;
         _staminaBarMask = GetComponent<Image>();
+        Stamina.OnStaminaChanged += UpdateStaminaBar;
     }
 
-    private void FixedUpdate()
+    private void UpdateStaminaBar(float newStamina)
     {
-        _staminaBarMask.fillAmount = _stamina.SharedStamina / 100f;
+        _staminaBarMask.fillAmount = newStamina / 100f;
     }
 }
