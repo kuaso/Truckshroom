@@ -34,8 +34,9 @@ public class CameraBehavior : MonoBehaviour
         var yDistance = Mathf.Abs(targetOneY - targetTwoY);
         var z = Zoom(xDistance, yDistance);
         cameraTransform.position = new Vector3(targetX, targetY, cameraTransform.position.z);
+        float newSize = Mathf.MoveTowards(c.orthographicSize, z, 5.0f * Time.deltaTime);
 
-        c.orthographicSize = z; //need to smooth zooming
+        c.orthographicSize = newSize; //need to smooth zooming
     }
 
     private float[] FindPosition()
