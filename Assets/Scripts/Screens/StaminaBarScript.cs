@@ -20,7 +20,7 @@ public class StaminaBarScript : MonoBehaviour
         {
             _staminaBarMask.fillAmount = newStamina / 100f;
         }
-        else
+        else if (_spriteRenderer != null)
         {
             _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b,
                 newStamina / 100f);
