@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,12 +27,12 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     {
         var staminaManager = GameObject.Find("StaminaManager");
         _stamina = staminaManager.GetComponent<Stamina>();
-        PauseMenuScript.OnMenuDestroyed += UnPause;
+        PauseMenuScript.MenuDestroyed += UnPause;
     }
 
     private void OnDestroy()
     {
-        PauseMenuScript.OnMenuDestroyed -= UnPause;
+        PauseMenuScript.MenuDestroyed -= UnPause;
     }
     private void UnPause() => _isPaused = false;
     

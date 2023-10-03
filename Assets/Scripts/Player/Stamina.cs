@@ -8,11 +8,19 @@ public class Stamina : MonoBehaviour
     private readonly bool[] _canRegenerate = { false, false };
 
     public float SharedStamina { get; private set; } = 100f;
+
+    // This automatically updates, whew! 
     public bool HasStamina => SharedStamina > 0f;
 
+    public delegate void OnStaminaChanged(float newStamina);
+    public static event OnStaminaChanged StaminaChanged;
+    public delegate void OnStaminaFullyRecharged();
+    public static event OnStaminaFullyRecharged StaminaFullyRecharged;
+    
     public void TickSharedStamina()
     {
         SharedStamina -= rateOfDecreasePercent;
+        StaminaChanged?.Invoke(SharedStamina);
     }
 
     public void RequestStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = true;
@@ -21,6 +29,12 @@ public class Stamina : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_canRegenerate[0] || !_canRegenerate[1]) return;
+        if (SharedStamina >= 100f)
+        {
+            StaminaFullyRecharged?.Invoke();
+            return;
+        }
         SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
+        StaminaChanged?.Invoke(SharedStamina);
     }
 }
