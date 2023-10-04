@@ -4,13 +4,20 @@ using UnityEngine.UI;
 public class StaminaBarScript : MonoBehaviour
 {
     private Image _staminaBarMask;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteMask _spriteMask;
+    private float _spriteMaskHeight;
 
     private void Awake()
     {
-        ;
         _staminaBarMask = GetComponent<Image>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteMask = GetComponentInChildren<SpriteMask>();
+        if (_spriteMask != null)
+        {
+            _spriteMaskHeight = _spriteMask.GetComponent<Renderer>().bounds.size.y;
+            var scale = _spriteMask.transform.localScale;
+            _spriteMask.transform.localScale = new Vector3(scale.x, _spriteMaskHeight, scale.z);
+        }
+
         Stamina.StaminaChanged += UpdateStaminaBar;
     }
 
@@ -20,10 +27,12 @@ public class StaminaBarScript : MonoBehaviour
         {
             _staminaBarMask.fillAmount = newStamina / 100f;
         }
-        else if (_spriteRenderer != null)
+        else if (_spriteMask != null)
         {
-            _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b,
-                newStamina / 100f);
+            var maskTransform = _spriteMask.transform;
+            var scale = maskTransform.localScale;
+            maskTransform.localScale = new Vector3(scale.x, (newStamina / 100f) * _spriteMaskHeight, scale.z);
+            // Debug.Log((newStamina / 100f) * _spriteMaskHeight);
         }
     }
 }
