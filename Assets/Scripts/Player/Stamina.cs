@@ -6,21 +6,22 @@ public class Stamina : MonoBehaviour
     [SerializeField] private float rateOfIncreasePercent = 5f;
 
     private readonly bool[] _canRegenerate = { false, false };
-
-    public float SharedStamina { get; private set; } = 100f;
+    
+    private const float MaxStamina = 100f;
+    private float sharedStamina = MaxStamina;
 
     // This automatically updates, whew! 
-    public bool HasStamina => SharedStamina > 0f;
+    public bool HasStamina => sharedStamina > 0f;
 
-    public delegate void OnStaminaChanged(float newStamina);
+    public delegate void OnStaminaChanged(float newStamina, float maxStamina = MaxStamina);
     public static event OnStaminaChanged StaminaChanged;
     public delegate void OnStaminaFullyRecharged();
     public static event OnStaminaFullyRecharged StaminaFullyRecharged;
     
     public void TickSharedStamina()
     {
-        SharedStamina -= rateOfDecreasePercent;
-        StaminaChanged?.Invoke(SharedStamina);
+        sharedStamina -= rateOfDecreasePercent;
+        StaminaChanged?.Invoke(sharedStamina);
     }
 
     public void RequestStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = true;
@@ -29,12 +30,12 @@ public class Stamina : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_canRegenerate[0] || !_canRegenerate[1]) return;
-        if (SharedStamina >= 100f)
+        if (sharedStamina >= 100f)
         {
             StaminaFullyRecharged?.Invoke();
             return;
         }
-        SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
-        StaminaChanged?.Invoke(SharedStamina);
+        sharedStamina = Mathf.Min(sharedStamina + rateOfIncreasePercent, 100f);
+        StaminaChanged?.Invoke(sharedStamina);
     }
 }
