@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Stamina : MonoBehaviour
@@ -7,21 +8,21 @@ public class Stamina : MonoBehaviour
 
     private readonly bool[] _canRegenerate = { false, false };
     
-    private const float MaxStamina = 100f;
-    private float sharedStamina = MaxStamina;
+    public const float MaxStamina = 100f;
+    public static float SharedStamina { get; private set; } = MaxStamina;
 
     // This automatically updates, whew! 
-    public bool HasStamina => sharedStamina > 0f;
-
+    public bool HasStamina => SharedStamina > 0f;
+    
     public delegate void OnStaminaChanged(float newStamina, float maxStamina = MaxStamina);
     public static event OnStaminaChanged StaminaChanged;
-    public delegate void OnStaminaFullyRecharged();
+    public delegate IEnumerable OnStaminaFullyRecharged();
     public static event OnStaminaFullyRecharged StaminaFullyRecharged;
     
     public void TickSharedStamina()
     {
-        sharedStamina -= rateOfDecreasePercent;
-        StaminaChanged?.Invoke(sharedStamina);
+        SharedStamina -= rateOfDecreasePercent;
+        StaminaChanged?.Invoke(SharedStamina);
     }
 
     public void RequestStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = true;
@@ -30,12 +31,12 @@ public class Stamina : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_canRegenerate[0] || !_canRegenerate[1]) return;
-        if (sharedStamina >= 100f)
+        if (SharedStamina >= 100f)
         {
             StaminaFullyRecharged?.Invoke();
             return;
         }
-        sharedStamina = Mathf.Min(sharedStamina + rateOfIncreasePercent, 100f);
-        StaminaChanged?.Invoke(sharedStamina);
+        SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
+        StaminaChanged?.Invoke(SharedStamina);
     }
 }
