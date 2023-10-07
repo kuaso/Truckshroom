@@ -13,10 +13,9 @@ public class Stamina : MonoBehaviour
 
     // This automatically updates, whew! 
     public bool HasStamina => SharedStamina > 0f;
-    
     public delegate void OnStaminaChanged(float newStamina, float maxStamina = MaxStamina);
     public static event OnStaminaChanged StaminaChanged;
-    public delegate IEnumerable OnStaminaFullyRecharged();
+    public delegate void OnStaminaFullyRecharged();
     public static event OnStaminaFullyRecharged StaminaFullyRecharged;
     
     public void TickSharedStamina()
@@ -31,12 +30,11 @@ public class Stamina : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_canRegenerate[0] || !_canRegenerate[1]) return;
-        if (SharedStamina >= 100f)
-        {
-            StaminaFullyRecharged?.Invoke();
-            return;
-        }
+        // We don't want to invoke the event if the stamina is already full
+        if (SharedStamina >= MaxStamina) return;
         SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
         StaminaChanged?.Invoke(SharedStamina);
+        if (SharedStamina < MaxStamina) return;
+        StaminaFullyRecharged?.Invoke();
     }
 }

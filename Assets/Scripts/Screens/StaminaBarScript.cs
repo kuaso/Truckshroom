@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StaminaBarScript : MonoBehaviour
@@ -7,6 +6,10 @@ public class StaminaBarScript : MonoBehaviour
     private SpriteRenderer[] _sprites;
     private SpriteMask _spriteMask;
     private float _spriteMaskHeight;
+    [SerializeField] private float fadeOutDuration = 3f;
+    
+    // We set this to true by default to ensure that the first time an update is called, the sprites are rendered
+    private bool shouldFadeOut = true;
 
     private void Awake()
     {
@@ -21,7 +24,7 @@ public class StaminaBarScript : MonoBehaviour
         Stamina.StaminaChanged += UpdateStaminaBar;
         Stamina.StaminaFullyRecharged += HideStaminaBar;
     }
-    
+
     private void OnDestroy()
     {
         Stamina.StaminaChanged -= UpdateStaminaBar;
@@ -30,9 +33,10 @@ public class StaminaBarScript : MonoBehaviour
 
     private void UpdateStaminaBar(float newStamina, float maxStamina)
     {
-        foreach (var sprite in _sprites)
+        if (shouldFadeOut)
         {
-            sprite.GameObject().SetActive(true);
+            shouldFadeOut = false;
+            RenderSprites();
         }
         var maskTransform = _spriteMask.transform;
         var pos = maskTransform.localPosition;
@@ -40,15 +44,42 @@ public class StaminaBarScript : MonoBehaviour
         maskTransform.localPosition = new Vector3(pos.x, _spriteMaskHeight * newStamina / maxStamina, pos.z);
     }
 
-    private IEnumerable HideStaminaBar()
+    private void RenderSprites()
     {
-        Debug.Log("h");
-        yield return new WaitForSeconds(2f);
-        if (Stamina.SharedStamina >= Stamina.MaxStamina) yield break;
         foreach (var sprite in _sprites)
         {
-            sprite.enabled = false;
-            Debug.Log("hi");
+            var spriteColor = sprite.color;
+            sprite.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, 1);
+        }
+    }
+
+    private void HideStaminaBar()
+    {
+        shouldFadeOut = true;
+        foreach (var sprite in _sprites)
+        {
+            StartCoroutine(FadeOutSprite(sprite));
+        }
+    }
+
+    /**
+     * Code taken from https://stackoverflow.com/questions/44933517/fading-in-out-gameobject
+     */
+    private IEnumerator FadeOutSprite(SpriteRenderer sprite)
+    {
+        var counter = 0f;
+        // Not material color!
+        var spriteColor = sprite.color;
+
+        while (counter < fadeOutDuration)
+        {
+            if (!shouldFadeOut) yield break;
+            counter += Time.deltaTime;
+            // Fade from 1 to 0 to fade out
+            var alpha = Mathf.Lerp(1, 0, counter / fadeOutDuration);
+            sprite.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, alpha);
+            //Wait for a frame
+            yield return null;
         }
     }
 }
