@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 414826271}
   m_Layer: 3
   m_Name: L
-  m_TagString: AllowStaminaRecharge
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
