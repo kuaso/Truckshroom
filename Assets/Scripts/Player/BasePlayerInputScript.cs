@@ -61,7 +61,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("AllowStaminaRecharge"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             _stamina.RequestStaminaRegeneration(_playerNumber);
         }
@@ -69,7 +69,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("AllowStaminaRecharge"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             _stamina.StopStaminaRegeneration(_playerNumber);
         }
