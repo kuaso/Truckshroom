@@ -2,38 +2,38 @@ using UnityEngine;
 
 public class Stamina : MonoBehaviour
 {
-    [SerializeField] private float rateOfDecreasePercent = 0.4f;
-    [SerializeField] private float rateOfIncreasePercent = 5f;
+    private const float RateOfDecreasePercent = 0.4f;
+    private const float RateOfIncreasePercent = 5f;
 
-    private readonly bool[] _canRegenerate = { false, false };
-    
-    public const float MaxStamina = 100f;
-    public static float SharedStamina { get; private set; } = MaxStamina;
+
+    private const float MaxStamina = 100f;
+    private static float SharedStamina { get; set; } = MaxStamina;
 
     // This automatically updates, whew! 
-    public bool HasStamina => SharedStamina > 0f;
+    public static bool HasStamina => SharedStamina > 0f;
     public delegate void OnStaminaChanged(float newStamina, float maxStamina = MaxStamina);
     public static event OnStaminaChanged StaminaChanged;
     public delegate void OnStaminaFullyRecharged();
     public static event OnStaminaFullyRecharged StaminaFullyRecharged;
     
-    public void TickSharedStamina()
+    public static void TickSharedStamina()
     {
-        SharedStamina -= rateOfDecreasePercent;
+        SharedStamina -= RateOfDecreasePercent;
         StaminaChanged?.Invoke(SharedStamina);
     }
 
-    public void RequestStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = true;
-    public void StopStaminaRegeneration(int playerNumber) => _canRegenerate[playerNumber] = false;
-
-    public void FixedUpdate()
+    public static void Regenerate() // TODO CONVERT TO COROUTINE THAT WE CAN CANCEL THORUGH #StopRegenerate
     {
-        if (!_canRegenerate[0] || !_canRegenerate[1]) return;
         // We don't want to invoke the event if the stamina is already full
         if (SharedStamina >= MaxStamina) return;
-        SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
+        SharedStamina = Mathf.Min(SharedStamina + RateOfIncreasePercent, 100f);
         StaminaChanged?.Invoke(SharedStamina);
         if (SharedStamina < MaxStamina) return;
         StaminaFullyRecharged?.Invoke();
+    }
+    
+    public static void StopRegenerate()
+    {
+        // TODO IMPLEMENT
     }
 }
