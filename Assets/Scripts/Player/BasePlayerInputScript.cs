@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,26 +9,19 @@ using UnityEngine.InputSystem;
  */
 public abstract class BasePlayerInputScript : MonoBehaviour
 {
-    private readonly int _playerNumber;
-    private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
     private bool _isPaused;
+    protected Dictionary<Collider2D, bool>[] ColliderStates = new Dictionary<Collider2D, bool>[2];
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private float horizontalMultiplier = 15f;
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
 
-    protected BasePlayerInputScript(int playerNumber)
-    {
-        _playerNumber = playerNumber;
-    }
-
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
-        _stamina = staminaManager.GetComponent<Stamina>();
         PauseMenuScript.MenuDestroyed += UnPause;
     }
 
@@ -34,11 +29,12 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     {
         PauseMenuScript.MenuDestroyed -= UnPause;
     }
+
     private void UnPause() => _isPaused = false;
-    
+
     protected void UpdateLoop(Rigidbody2D rb)
     {
-        if (!_stamina.HasStamina)
+        if (!Stamina.HasStamina)
         {
             _verticalMovement = 0f;
         }
@@ -46,7 +42,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
-            _stamina.TickSharedStamina();
+            Stamina.TickSharedStamina();
         }
 
         var rbTransform = rb.transform;
@@ -59,19 +55,35 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         };
     }
 
-    protected void OnCollisionEnter2D(Collision2D other)
+    protected void CollisionEntered2D(Collision2D other, int playerNumber)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        foreach (var (key, _) in ColliderStates[playerNumber])
         {
-            _stamina.RequestStaminaRegeneration(_playerNumber);
+            if (other.collider.GetType() != key.GetType() ||
+                other.gameObject.layer != LayerMask.NameToLayer("Ground")) continue;
+            ColliderStates[playerNumber][key] = true;
+
+            var canRegenerate = ColliderStates.All(playerDict => playerDict.ContainsValue(true));
+            if (canRegenerate)
+            {
+                Stamina.Regenerate();
+            }
         }
     }
 
-    protected void OnCollisionExit2D(Collision2D other)
+    protected void CollisionExited2D(Collision2D other, int playerNumber)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        foreach (var (key, _) in ColliderStates[playerNumber])
         {
-            _stamina.StopStaminaRegeneration(_playerNumber);
+            if (other.collider.GetType() != key.GetType() ||
+                other.gameObject.layer != LayerMask.NameToLayer("Ground")) continue;
+            ColliderStates[playerNumber][key] = true;
+
+            var canRegenerate = ColliderStates.All(playerDict => !playerDict.ContainsValue(true));
+            if (canRegenerate)
+            {
+                Stamina.StopRegenerate();
+            }
         }
     }
 

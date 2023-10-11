@@ -6,10 +6,6 @@ public class Player2InputScript : BasePlayerInputScript
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
 
-    public Player2InputScript() : base(PlayerNumber)
-    {
-    }
-
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -36,4 +32,14 @@ public class Player2InputScript : BasePlayerInputScript
     }
 
     private void FixedUpdate() => UpdateLoop(_rb);
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        CollisionEntered2D(other, PlayerNumber);
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        CollisionExited2D(other, PlayerNumber);
+    }
 }
