@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - AllowStaminaRecharge
   layers:
   - Default
   - TransparentFX
@@ -55,4 +56,10 @@ TagManager:
     locked: 0
   - name: Text
     uniqueID: 1713636785
+    locked: 0
+  - name: Player 1
+    uniqueID: 2415067805
+    locked: 0
+  - name: Player 2
+    uniqueID: 2881179033
     locked: 0
