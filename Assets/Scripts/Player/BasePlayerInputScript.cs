@@ -12,7 +12,10 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
+
     private bool _isPaused;
+
+    // Each entry should be set by the child class
     protected static readonly Dictionary<int, Dictionary<Collider2D, bool>> ColliderStates = new();
 
     [SerializeField] private GameObject pauseMenu;
@@ -60,6 +63,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     protected void CollisionEntered2D(Collision2D other, int playerNumber)
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
+        // Note that other.collider gets what we collided into, not the player collider.
         var playerCollider = other.otherCollider;
         if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
         ColliderStates[playerNumber][playerCollider] = true;
@@ -76,13 +80,15 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     protected void CollisionExited2D(Collision2D other, int playerNumber)
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
+        // Note that other.collider gets what we collided into, not the player collider.
         var playerCollider = other.otherCollider;
         if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
-        ColliderStates[playerNumber][playerCollider] = false;
+        ColliderStates[playerNumber][playerCollider] = false; // Note that this is false, unlike #CollisionEntered2D.
+
         var shouldStopRegenerate = ColliderStates.Any(
             playerColliders => !playerColliders.Value.ContainsValue(true)
         );
-    if (shouldStopRegenerate)
+        if (shouldStopRegenerate)
         {
             _stamina.StopRegenerate();
         }
