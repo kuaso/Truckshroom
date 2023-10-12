@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player1InputScript : BasePlayerInputScript
@@ -9,11 +10,12 @@ public class Player1InputScript : BasePlayerInputScript
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
+        ColliderStates[PlayerNumber] = new Dictionary<Collider2D, bool>();
         foreach (var key in GetComponents<Collider2D>())
         {
             ColliderStates[PlayerNumber][key] = false;
         }
-
+        
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player1.HorizontalMovement.performed += Move;
@@ -38,14 +40,6 @@ public class Player1InputScript : BasePlayerInputScript
     }
 
     private void FixedUpdate() => UpdateLoop(_rb);
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        CollisionEntered2D(other, PlayerNumber);
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        CollisionExited2D(other, PlayerNumber);
-    }
+    private void OnCollisionEnter2D(Collision2D other) => CollisionEntered2D(other, PlayerNumber);
+    private void OnCollisionExit2D(Collision2D other) => CollisionExited2D(other, PlayerNumber);
 }

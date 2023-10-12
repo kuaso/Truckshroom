@@ -9,10 +9,11 @@ using UnityEngine.InputSystem;
  */
 public abstract class BasePlayerInputScript : MonoBehaviour
 {
+    private Stamina _stamina;
     private float _horizontalMovement;
     private float _verticalMovement;
     private bool _isPaused;
-    protected Dictionary<Collider2D, bool>[] ColliderStates = new Dictionary<Collider2D, bool>[2];
+    protected static readonly Dictionary<int, Dictionary<Collider2D, bool>> ColliderStates = new();
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private float horizontalMultiplier = 15f;
@@ -22,6 +23,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
+        _stamina = staminaManager.GetComponent<Stamina>();
         PauseMenuScript.MenuDestroyed += UnPause;
     }
 
@@ -34,7 +36,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void UpdateLoop(Rigidbody2D rb)
     {
-        if (!Stamina.HasStamina)
+        if (!_stamina.HasStamina)
         {
             _verticalMovement = 0f;
         }
@@ -42,7 +44,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
-            Stamina.TickSharedStamina();
+            _stamina.TickSharedStamina();
         }
 
         var rbTransform = rb.transform;
@@ -57,33 +59,32 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void CollisionEntered2D(Collision2D other, int playerNumber)
     {
-        foreach (var (key, _) in ColliderStates[playerNumber])
-        {
-            if (other.collider.GetType() != key.GetType() ||
-                other.gameObject.layer != LayerMask.NameToLayer("Ground")) continue;
-            ColliderStates[playerNumber][key] = true;
+        if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
+        var playerCollider = other.otherCollider;
+        if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
+        ColliderStates[playerNumber][playerCollider] = true;
 
-            var canRegenerate = ColliderStates.All(playerDict => playerDict.ContainsValue(true));
-            if (canRegenerate)
-            {
-                Stamina.Regenerate();
-            }
+        var canRegenerate = ColliderStates.All(
+            playerColliders => playerColliders.Value.ContainsValue(true)
+        );
+        if (canRegenerate)
+        {
+            _stamina.Regenerate();
         }
     }
 
     protected void CollisionExited2D(Collision2D other, int playerNumber)
     {
-        foreach (var (key, _) in ColliderStates[playerNumber])
+        if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
+        var playerCollider = other.otherCollider;
+        if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
+        ColliderStates[playerNumber][playerCollider] = false;
+        var shouldStopRegenerate = ColliderStates.Any(
+            playerColliders => !playerColliders.Value.ContainsValue(true)
+        );
+    if (shouldStopRegenerate)
         {
-            if (other.collider.GetType() != key.GetType() ||
-                other.gameObject.layer != LayerMask.NameToLayer("Ground")) continue;
-            ColliderStates[playerNumber][key] = true;
-
-            var canRegenerate = ColliderStates.All(playerDict => !playerDict.ContainsValue(true));
-            if (canRegenerate)
-            {
-                Stamina.StopRegenerate();
-            }
+            _stamina.StopRegenerate();
         }
     }
 
