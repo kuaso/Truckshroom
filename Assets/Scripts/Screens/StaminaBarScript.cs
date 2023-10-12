@@ -7,7 +7,7 @@ public class StaminaBarScript : MonoBehaviour
     private SpriteMask _spriteMask;
     private float _spriteMaskHeight;
     [SerializeField] private float fadeOutDuration = 3f;
-    
+
     // We set this to true by default to ensure that the first time an update is called, the sprites are rendered
     private bool shouldFadeOut = true;
 
@@ -38,6 +38,7 @@ public class StaminaBarScript : MonoBehaviour
             shouldFadeOut = false;
             RenderSprites();
         }
+
         var maskTransform = _spriteMask.transform;
         var pos = maskTransform.localPosition;
         // This essentially gets the fill as a percentage of stamina left, and multiplies it by the height of the stamina bar

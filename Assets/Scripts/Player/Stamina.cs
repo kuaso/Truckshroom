@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Stamina : MonoBehaviour
 {
-    private const float RateOfDecreasePercent = 0.4f;
-    private const float RateOfIncreasePercent = 5f;
+    [SerializeField] private float rateOfDecreasePercent = 0.4f;
+    [SerializeField] private float rateOfIncreasePercent = 5f;
 
     private const float MaxStamina = 100f;
     private bool canRegenerate = false;
@@ -12,14 +12,18 @@ public class Stamina : MonoBehaviour
 
     // This automatically updates, whew! 
     public bool HasStamina => SharedStamina > 0f;
+
     public delegate void OnStaminaChanged(float newStamina, float maxStamina = MaxStamina);
+
     public static event OnStaminaChanged StaminaChanged;
+
     public delegate void OnStaminaFullyRecharged();
+
     public static event OnStaminaFullyRecharged StaminaFullyRecharged;
-    
+
     public void TickSharedStamina()
     {
-        SharedStamina -= RateOfDecreasePercent;
+        SharedStamina -= rateOfDecreasePercent;
         StaminaChanged?.Invoke(SharedStamina);
     }
 
@@ -31,20 +35,18 @@ public class Stamina : MonoBehaviour
 
     private IEnumerator RecoverStamina()
     {
-        while (canRegenerate)
+        while (canRegenerate && SharedStamina < MaxStamina)
         {
-            // We don't want to invoke the event if the stamina is already full
-            if (SharedStamina >= MaxStamina) yield return null;
-            SharedStamina = Mathf.Min(SharedStamina + RateOfIncreasePercent, 100f);
+            SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
             StaminaChanged?.Invoke(SharedStamina);
-            if (SharedStamina < MaxStamina) yield return null;
-            StaminaFullyRecharged?.Invoke();
+            if (SharedStamina >= MaxStamina)
+            {
+                StaminaFullyRecharged?.Invoke();
+            }
+            yield return null;
         }
     }
 
-    public void StopRegenerate()
-    {
-        Debug.Log("hi");
-        canRegenerate = false;
-    }
+    public void StopRegenerate() => canRegenerate = false;
+    
 }
