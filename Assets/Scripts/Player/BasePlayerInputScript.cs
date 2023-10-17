@@ -37,19 +37,14 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     private void UnPause() => _isPaused = false;
 
-    protected void UpdateLoop(Rigidbody2D rb, int playerNumber)
+    protected void UpdateLoop(Rigidbody2D rb)
     {
         if (!_stamina.HasStamina)
         {
             _verticalMovement = 0f;
         }
 
-        if (ColliderStates[playerNumber].ContainsValue(true))
-        {
-            _verticalMovement -= gravity;
-        }
-
-        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement);
+        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
             _stamina.TickSharedStamina();
