@@ -39,7 +39,7 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb);
+    private void FixedUpdate() => UpdateLoop(_rb, PlayerNumber);
     private void OnCollisionEnter2D(Collision2D other) => CollisionEntered2D(other, PlayerNumber);
     private void OnCollisionExit2D(Collision2D other) => CollisionExited2D(other, PlayerNumber);
 }
