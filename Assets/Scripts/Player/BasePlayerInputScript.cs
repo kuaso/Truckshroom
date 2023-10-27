@@ -44,7 +44,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _verticalMovement = 0f;
         }
 
-        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
+        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement);
         if (_verticalMovement > 0f)
         {
             _stamina.TickSharedStamina();

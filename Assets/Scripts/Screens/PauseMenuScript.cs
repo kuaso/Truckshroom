@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -9,8 +10,14 @@ public class PauseMenuScript : MonoBehaviour
     public delegate void OnMenuDestroyed();
     public static event OnMenuDestroyed MenuDestroyed;
     
+    private Button _currentButton;
+    private Button[] _buttons;
+    
     private void OnEnable()
     {
+        _buttons = GetComponentsInChildren<Button>();
+        _currentButton = _buttons[0];
+        Debug.Log(_currentButton.name);
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Menuing.NavigateDown.performed += NavigateDown;
