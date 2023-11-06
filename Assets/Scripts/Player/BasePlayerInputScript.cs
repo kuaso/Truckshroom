@@ -23,6 +23,9 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
 
+    // events for walking, crouching, flying
+    // public delegate void OnMove(InputAction.CallbackContext ctx);
+    
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
@@ -44,7 +47,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             _verticalMovement = 0f;
         }
 
-        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement);
+        rb.velocity = new Vector2(_horizontalMovement, _verticalMovement - gravity);
         if (_verticalMovement > 0f)
         {
             _stamina.TickSharedStamina();
