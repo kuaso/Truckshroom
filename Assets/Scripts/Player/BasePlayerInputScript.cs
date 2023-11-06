@@ -22,9 +22,7 @@ public abstract class BasePlayerInputScript : MonoBehaviour
     [SerializeField] private float horizontalMultiplier = 15f;
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
-
-    // events for walking, crouching, flying
-    // public delegate void OnMove(InputAction.CallbackContext ctx);
+    
     
     private void Awake()
     {
