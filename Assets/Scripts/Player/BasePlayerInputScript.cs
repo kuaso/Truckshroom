@@ -103,15 +103,9 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void StoppedMoving(InputAction.CallbackContext ctx) => _horizontalMovement = 0f;
 
-    protected void Crouch(InputAction.CallbackContext ctx)
-    {
-        // TODO manipulate sprite and hit-box 
-    }
+    protected void Crouch(InputAction.CallbackContext ctx) => _verticalMovement = -1f * verticalMultiplier;
 
-    protected void StoppedCrouching(InputAction.CallbackContext ctx)
-    {
-        // TODO manipulate sprite and hit-box
-    }
+    protected void StoppedCrouching(InputAction.CallbackContext ctx) => _verticalMovement = 0f;
 
     // This is a button press, not a vector value. When this is called, we know that the button is being pressed/held.
     protected void Fly(InputAction.CallbackContext ctx) => _verticalMovement = 1f * verticalMultiplier;
