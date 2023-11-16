@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuScript : MonoBehaviour
 {
     public delegate void OnMenuDestroyed();
+
     public static event OnMenuDestroyed MenuDestroyed;
 
     public void DestroyMenu()
@@ -20,8 +21,10 @@ public class PauseMenuScript : MonoBehaviour
         MenuDestroyed?.Invoke();
     }
 
-    private void SaveGame()
+    private static void SaveGame()
     {
-        // TODO save logic, either in this or in another script
+        // Since we're not storing much data, it doesn't make much sense to create a whole new json data manager
+        PlayerPrefs.SetString("LastPlayedLevel", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
     }
 }
