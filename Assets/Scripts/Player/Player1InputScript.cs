@@ -18,7 +18,7 @@ public class Player1InputScript : BasePlayerInputScript
         {
             ColliderStates[PlayerNumber][key] = false;
         }
-        
+
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player1.HorizontalMovement.performed += Move;
@@ -43,10 +43,10 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb);
+    private void FixedUpdate() => UpdateLoop(_rb, _animator);
     private void OnCollisionEnter2D(Collision2D other) => CollisionEntered2D(other, PlayerNumber);
     private void OnCollisionExit2D(Collision2D other) => CollisionExited2D(other, PlayerNumber);
-    
+
     private void AnimateMove(InputAction.CallbackContext context)
     {
         //TODO

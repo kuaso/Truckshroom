@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -38,7 +39,13 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     private void UnPause() => _isPaused = false;
 
-    protected void UpdateLoop(Rigidbody2D rb)
+    private void Animate(Animator animator)
+    {
+        // TODO Animate by changing the animator's parameters
+        // animator.SetBool("isCrouching", true);
+    }
+
+    protected void UpdateLoop(Rigidbody2D rb, Animator animator)
     {
         if (!_stamina.HasStamina)
         {
@@ -59,6 +66,8 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             < 0f => new Vector3(Mathf.Abs(localScale.x) * -1, localScale.y, localScale.z),
             _ => localScale
         };
+        
+        Animate(animator);
     }
 
     protected void CollisionEntered2D(Collision2D other, int playerNumber)
