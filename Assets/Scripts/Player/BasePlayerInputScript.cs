@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -126,5 +125,10 @@ public abstract class BasePlayerInputScript : MonoBehaviour
         if (_isPaused) return;
         Instantiate(pauseMenu);
         _isPaused = true;
+    }
+
+    protected void ToggleCarry(InputAction.CallbackContext ctx)
+    {
+        
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player1InputScript : BasePlayerInputScript
 {
@@ -22,13 +21,14 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player1.HorizontalMovement.performed += Move;
-        _playerInput.Player1.HorizontalMovement.performed += AnimateMove;
         _playerInput.Player1.HorizontalMovement.canceled += StoppedMoving;
         _playerInput.Player1.Crouch.performed += Crouch;
         _playerInput.Player1.Crouch.canceled += StoppedCrouching;
         _playerInput.Player1.Fly.performed += Fly;
         _playerInput.Player1.Fly.canceled += StoppedFlying;
         _playerInput.Player1.Pause.performed += Pause;
+        _playerInput.Player1.Carry.performed += ToggleCarry;
+        _playerInput.Player1.Carry.canceled += ToggleCarry;
     }
 
     private void OnDisable()
@@ -40,15 +40,12 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Player1.Fly.performed -= Fly;
         _playerInput.Player1.Fly.canceled -= StoppedFlying;
         _playerInput.Player1.Pause.performed -= Pause;
+        _playerInput.Player1.Carry.performed -= ToggleCarry;
+        _playerInput.Player1.Carry.canceled -= ToggleCarry;
         _playerInput.Disable();
     }
 
     private void FixedUpdate() => UpdateLoop(_rb, _animator);
     private void OnCollisionEnter2D(Collision2D other) => CollisionEntered2D(other, PlayerNumber);
     private void OnCollisionExit2D(Collision2D other) => CollisionExited2D(other, PlayerNumber);
-
-    private void AnimateMove(InputAction.CallbackContext context)
-    {
-        //TODO
-    }
 }

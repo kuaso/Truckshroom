@@ -62,6 +62,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Carry"",
+                    ""type"": ""Button"",
+                    ""id"": ""2604078c-eb56-4ba8-b647-92c62b32e2a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a12640cb-d49e-48e3-9e8c-52d3fa80eeba"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Left"",
+                    ""action"": ""Carry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -163,6 +183,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Carry"",
+                    ""type"": ""Button"",
+                    ""id"": ""bed540a9-4aad-4af8-83b3-f3c4905b6020"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +247,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard Right"",
                     ""action"": ""Fly"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0503384d-689b-432f-b77f-4de2a0d0723e"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Carry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -424,11 +464,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player1_Crouch = m_Player1.FindAction("Crouch", throwIfNotFound: true);
         m_Player1_Fly = m_Player1.FindAction("Fly", throwIfNotFound: true);
         m_Player1_Pause = m_Player1.FindAction("Pause", throwIfNotFound: true);
+        m_Player1_Carry = m_Player1.FindAction("Carry", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_HorizontalMovement = m_Player2.FindAction("Horizontal Movement", throwIfNotFound: true);
         m_Player2_Crouch = m_Player2.FindAction("Crouch", throwIfNotFound: true);
         m_Player2_Fly = m_Player2.FindAction("Fly", throwIfNotFound: true);
+        m_Player2_Carry = m_Player2.FindAction("Carry", throwIfNotFound: true);
         // Menuing
         m_Menuing = asset.FindActionMap("Menuing", throwIfNotFound: true);
         m_Menuing_NavigateUp = m_Menuing.FindAction("Navigate Up", throwIfNotFound: true);
@@ -504,6 +546,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_Crouch;
     private readonly InputAction m_Player1_Fly;
     private readonly InputAction m_Player1_Pause;
+    private readonly InputAction m_Player1_Carry;
     public struct Player1Actions
     {
         private @PlayerInput m_Wrapper;
@@ -512,6 +555,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player1_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player1_Fly;
         public InputAction @Pause => m_Wrapper.m_Player1_Pause;
+        public InputAction @Carry => m_Wrapper.m_Player1_Carry;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,6 +577,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Carry.started += instance.OnCarry;
+            @Carry.performed += instance.OnCarry;
+            @Carry.canceled += instance.OnCarry;
         }
 
         private void UnregisterCallbacks(IPlayer1Actions instance)
@@ -549,6 +596,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Carry.started -= instance.OnCarry;
+            @Carry.performed -= instance.OnCarry;
+            @Carry.canceled -= instance.OnCarry;
         }
 
         public void RemoveCallbacks(IPlayer1Actions instance)
@@ -573,6 +623,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_HorizontalMovement;
     private readonly InputAction m_Player2_Crouch;
     private readonly InputAction m_Player2_Fly;
+    private readonly InputAction m_Player2_Carry;
     public struct Player2Actions
     {
         private @PlayerInput m_Wrapper;
@@ -580,6 +631,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @HorizontalMovement => m_Wrapper.m_Player2_HorizontalMovement;
         public InputAction @Crouch => m_Wrapper.m_Player2_Crouch;
         public InputAction @Fly => m_Wrapper.m_Player2_Fly;
+        public InputAction @Carry => m_Wrapper.m_Player2_Carry;
         public InputActionMap Get() { return m_Wrapper.m_Player2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -598,6 +650,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started += instance.OnFly;
             @Fly.performed += instance.OnFly;
             @Fly.canceled += instance.OnFly;
+            @Carry.started += instance.OnCarry;
+            @Carry.performed += instance.OnCarry;
+            @Carry.canceled += instance.OnCarry;
         }
 
         private void UnregisterCallbacks(IPlayer2Actions instance)
@@ -611,6 +666,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fly.started -= instance.OnFly;
             @Fly.performed -= instance.OnFly;
             @Fly.canceled -= instance.OnFly;
+            @Carry.started -= instance.OnCarry;
+            @Carry.performed -= instance.OnCarry;
+            @Carry.canceled -= instance.OnCarry;
         }
 
         public void RemoveCallbacks(IPlayer2Actions instance)
@@ -776,12 +834,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnCarry(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
         void OnHorizontalMovement(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnFly(InputAction.CallbackContext context);
+        void OnCarry(InputAction.CallbackContext context);
     }
     public interface IMenuingActions
     {
