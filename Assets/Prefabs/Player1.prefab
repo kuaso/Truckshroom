@@ -31,7 +31,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7871236215028185005}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.2913575}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &9164395747525368138
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7871236215028185005}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -105.62}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -138.83}
 --- !u!60 &8524436450736640539
 PolygonCollider2D:
   m_ObjectHideFlags: 0
