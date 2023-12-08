@@ -12,11 +12,7 @@ public class Player1InputScript : BasePlayerInputScript
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        ColliderStates[PlayerNumber] = new Dictionary<Collider2D, bool>();
-        foreach (var key in GetComponents<Collider2D>())
-        {
-            ColliderStates[PlayerNumber][key] = false;
-        }
+        IsGrounded.Add(PlayerNumber, false);
 
         _playerInput = new PlayerInput();
         _playerInput.Enable();
@@ -45,7 +41,5 @@ public class Player1InputScript : BasePlayerInputScript
         _playerInput.Disable();
     }
 
-    private void FixedUpdate() => UpdateLoop(_rb, _animator);
-    private void OnCollisionEnter2D(Collision2D other) => CollisionEntered2D(other, PlayerNumber);
-    private void OnCollisionExit2D(Collision2D other) => CollisionExited2D(other, PlayerNumber);
+    private void FixedUpdate() => UpdateLoop(_rb, PlayerNumber, _animator);
 }

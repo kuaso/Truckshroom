@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,15 +17,14 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     private bool _isPaused;
 
-    // Each entry should be set by the child class
-    protected static readonly Dictionary<int, Dictionary<Collider2D, bool>> ColliderStates = new();
+    protected static readonly Dictionary<int, bool> IsGrounded = new();
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private float horizontalMultiplier = 15f;
     [SerializeField] private float verticalMultiplier = 20f;
     [SerializeField] private float gravity = 9.81f;
-    
-    
+
+
     private void Awake()
     {
         var staminaManager = GameObject.Find("StaminaManager");
@@ -38,13 +39,38 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     private void UnPause() => _isPaused = false;
 
+    private IEnumerator CheckIfGrounded(Rigidbody2D rb, int playerNumber, int iterationsLeft, float yPos)
+    {
+        Debug.Log("Checking if grounded");
+        if (iterationsLeft <= 0)
+        {
+            IsGrounded[playerNumber] = true;
+            if (IsGrounded.Values.All(isTrue => isTrue))
+            {
+                _stamina.StartRegenerate();
+            }
+
+            yield break;
+        }
+
+        if (Mathf.Abs(rb.position.y - yPos) > 0.0000001) // Arbitrary tolerance value
+        {
+            IsGrounded[playerNumber] = false;
+            _stamina.StopRegenerate();
+            yield break;
+        }
+
+        yield return new WaitForFixedUpdate();
+        yield return CheckIfGrounded(rb, playerNumber, iterationsLeft - 1, yPos);
+    }
+
     private void Animate(Animator animator)
     {
         // TODO Animate by changing the animator's parameters
         // animator.SetBool("isCrouching", true);
     }
 
-    protected void UpdateLoop(Rigidbody2D rb, Animator animator)
+    protected void UpdateLoop(Rigidbody2D rb, int playerNumber, Animator animator)
     {
         if (!_stamina.HasStamina)
         {
@@ -65,42 +91,11 @@ public abstract class BasePlayerInputScript : MonoBehaviour
             < 0f => new Vector3(Mathf.Abs(localScale.x) * -1, localScale.y, localScale.z),
             _ => localScale
         };
-        
+
         Animate(animator);
-    }
 
-    protected void CollisionEntered2D(Collision2D other, int playerNumber)
-    {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
-        // Note that other.collider gets what we collided into, not the player collider.
-        var playerCollider = other.otherCollider;
-        if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
-        ColliderStates[playerNumber][playerCollider] = true;
-
-        var canRegenerate = ColliderStates.All(
-            playerColliders => playerColliders.Value.ContainsValue(true)
-        );
-        if (canRegenerate)
-        {
-            _stamina.Regenerate();
-        }
-    }
-
-    protected void CollisionExited2D(Collision2D other, int playerNumber)
-    {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
-        // Note that other.collider gets what we collided into, not the player collider.
-        var playerCollider = other.otherCollider;
-        if (!ColliderStates[playerNumber].ContainsKey(playerCollider)) return;
-        ColliderStates[playerNumber][playerCollider] = false; // Note that this is false, unlike #CollisionEntered2D.
-
-        var shouldStopRegenerate = ColliderStates.Any(
-            playerColliders => !playerColliders.Value.ContainsValue(true)
-        );
-        if (shouldStopRegenerate)
-        {
-            _stamina.StopRegenerate();
-        }
+        _ = CheckIfGrounded(rb, playerNumber, 10, rb.position.y);
+        Debug.Log("isGrounded.ToString(): " + IsGrounded[0] + IsGrounded[1]);
     }
 
     protected void Move(InputAction.CallbackContext ctx)
@@ -129,6 +124,5 @@ public abstract class BasePlayerInputScript : MonoBehaviour
 
     protected void ToggleCarry(InputAction.CallbackContext ctx)
     {
-        
     }
 }

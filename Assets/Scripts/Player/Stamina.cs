@@ -7,7 +7,7 @@ public class Stamina : MonoBehaviour
     [SerializeField] private float rateOfIncreasePercent = 5f;
 
     private const float MaxStamina = 100f;
-    private bool canRegenerate = false;
+    private bool _canRegenerate = false;
     private float SharedStamina { get; set; } = MaxStamina;
 
     // This automatically updates, whew! 
@@ -27,15 +27,15 @@ public class Stamina : MonoBehaviour
         StaminaChanged?.Invoke(SharedStamina);
     }
 
-    public void Regenerate()
+    public void StartRegenerate()
     {
-        canRegenerate = true;
+        _canRegenerate = true;
         StartCoroutine(RecoverStamina());
     }
 
     private IEnumerator RecoverStamina()
     {
-        while (canRegenerate && SharedStamina < MaxStamina)
+        while (_canRegenerate && SharedStamina < MaxStamina)
         {
             SharedStamina = Mathf.Min(SharedStamina + rateOfIncreasePercent, 100f);
             StaminaChanged?.Invoke(SharedStamina);
@@ -47,6 +47,6 @@ public class Stamina : MonoBehaviour
         }
     }
 
-    public void StopRegenerate() => canRegenerate = false;
+    public void StopRegenerate() => _canRegenerate = false;
     
 }

@@ -433,6 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63ebb16fa64d9379a0fca867fde0acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 
   pauseMenu: {fileID: 5745712473856843872, guid: 47e3398d564c2fc5daf495af19557e5d, type: 3}
   horizontalMultiplier: 15
   verticalMultiplier: 20
