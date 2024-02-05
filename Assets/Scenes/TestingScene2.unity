@@ -1372,6 +1372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StaminaManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5302282984486774755, guid: fe310df1b30115cac940ea51002dc594, type: 3}
+      propertyPath: rateOfDecreasePercent
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
